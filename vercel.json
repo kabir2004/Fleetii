@@ -1,0 +1,7 @@
+{
+  "buildCommand": "cd rampx && npm install && npm run build",
+  "outputDirectory": "rampx/dist",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
