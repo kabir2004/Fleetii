@@ -41,8 +41,8 @@ export default function InvoicesPage() {
 
   /* derived KPIs */
   const totalSavings  = MOCK_INVOICES.reduce((s, i) => s + (i.savings_identified ?? 0), 0)
-  const totalPayable  = MOCK_INVOICES.filter(i => i.type === 'payable' && i.status !== 'paid').reduce((s, i) => s + i.balance_due, 0)
-  const totalReceivable = MOCK_INVOICES.filter(i => i.type === 'receivable' && i.status !== 'paid').reduce((s, i) => s + i.balance_due, 0)
+  const totalPayable  = MOCK_INVOICES.filter(i => i.type === 'payable' && i.status !== 'paid').reduce((s, i) => s + (i.balance_due ?? 0), 0)
+  const totalReceivable = MOCK_INVOICES.filter(i => i.type === 'receivable' && i.status !== 'paid').reduce((s, i) => s + (i.balance_due ?? 0), 0)
   const disputed      = MOCK_INVOICES.filter(i => i.status === 'disputed').length
   const overdue       = MOCK_INVOICES.filter(i => i.status === 'overdue').length
 
@@ -248,8 +248,8 @@ export default function InvoicesPage() {
                 </td>
                 <td className="px-5 py-4">
                   <p className="text-sm font-semibold text-gray-900 dark:text-zinc-50 tabular-nums">{formatCurrency(inv.total)}</p>
-                  {inv.balance_due > 0 && inv.balance_due < inv.total && (
-                    <p className="text-xs text-gray-400 dark:text-zinc-500 tabular-nums">{formatCurrency(inv.balance_due)} due</p>
+                  {(inv.balance_due ?? 0) > 0 && (inv.balance_due ?? 0) < inv.total && (
+                    <p className="text-xs text-gray-400 dark:text-zinc-500 tabular-nums">{formatCurrency(inv.balance_due ?? 0)} due</p>
                   )}
                 </td>
                 <td className="px-5 py-4">

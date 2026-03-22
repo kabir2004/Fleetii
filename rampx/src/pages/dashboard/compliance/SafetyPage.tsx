@@ -96,7 +96,7 @@ export default function SafetyPage() {
                       </div>
                       <div>
                         <p className="text-sm font-semibold text-gray-900 dark:text-zinc-50">{driver.first_name} {driver.last_name}</p>
-                        <p className="text-xs text-gray-400 dark:text-zinc-500">{driver.license_class ?? 'CDL-A'}</p>
+                        <p className="text-xs text-gray-400 dark:text-zinc-500">{(driver as { license_class?: string }).license_class ?? 'CDL-A'}</p>
                       </div>
                     </div>
                   </td>

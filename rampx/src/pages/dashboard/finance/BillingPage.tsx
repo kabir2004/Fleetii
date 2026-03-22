@@ -15,10 +15,10 @@ export default function BillingPage() {
   const [statusFilter, setStatusFilter] = useState<string>('all')
 
   const receivables = MOCK_INVOICES.filter(i => i.type === 'receivable')
-  const totalAR     = receivables.filter(i => i.status !== 'paid').reduce((s, i) => s + i.balance_due, 0)
+  const totalAR     = receivables.filter(i => i.status !== 'paid').reduce((s, i) => s + (i.balance_due ?? 0), 0)
   const paidMTD     = receivables.filter(i => i.status === 'paid').reduce((s, i) => s + i.total, 0)
   const overdueCount = receivables.filter(i => i.status === 'overdue').length
-  const overdueAmt   = receivables.filter(i => i.status === 'overdue').reduce((s, i) => s + i.balance_due, 0)
+  const overdueAmt   = receivables.filter(i => i.status === 'overdue').reduce((s, i) => s + (i.balance_due ?? 0), 0)
 
   const filtered = receivables.filter(inv => {
     const q = search.toLowerCase()
@@ -130,8 +130,8 @@ export default function BillingPage() {
                 </td>
                 <td className="px-6 py-4 text-sm font-semibold text-gray-900 dark:text-zinc-50 tabular-nums">{formatCurrency(inv.total)}</td>
                 <td className="px-6 py-4">
-                  <span className={cn('text-sm font-bold tabular-nums', inv.balance_due > 0 ? 'text-red-600' : 'text-green-600')}>
-                    {inv.balance_due > 0 ? formatCurrency(inv.balance_due) : 'Paid'}
+                  <span className={cn('text-sm font-bold tabular-nums', (inv.balance_due ?? 0) > 0 ? 'text-red-600' : 'text-green-600')}>
+                    {(inv.balance_due ?? 0) > 0 ? formatCurrency(inv.balance_due ?? 0) : 'Paid'}
                   </span>
                 </td>
               </motion.tr>

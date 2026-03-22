@@ -35,7 +35,7 @@ export default function PaymentsPage() {
 
   const filtered = MOCK_PAYMENTS.filter(p => {
     const q = search.toLowerCase()
-    const matchSearch = !search || p.payee_name.toLowerCase().includes(q) || (p.reference_number ?? '').toLowerCase().includes(q)
+    const matchSearch = !search || (p.payee_name ?? "").toLowerCase().includes(q) || (p.reference_number ?? '').toLowerCase().includes(q)
     const matchStatus = statusFilter === 'all' || p.status === statusFilter
     return matchSearch && matchStatus
   })
@@ -116,7 +116,7 @@ export default function PaymentsPage() {
                   </div>
                 </td>
                 <td className="px-6 py-4 text-sm font-medium text-gray-800 dark:text-zinc-100">{p.payee_name}</td>
-                <td className="px-6 py-4 text-sm text-gray-500 dark:text-zinc-400">{METHOD_LABEL[p.payment_method] ?? p.payment_method}</td>
+                <td className="px-6 py-4 text-sm text-gray-500 dark:text-zinc-400">{METHOD_LABEL[p.payment_method ?? ""] ?? p.payment_method}</td>
                 <td className="px-6 py-4 text-xs text-gray-400 dark:text-zinc-500 tabular-nums">{p.reference_number ?? '—'}</td>
                 <td className="px-6 py-4 text-sm text-gray-600 dark:text-zinc-400 tabular-nums">{formatDate(p.completed_date ?? p.scheduled_date)}</td>
                 <td className="px-6 py-4">
