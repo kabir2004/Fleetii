@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Plus, Search, LayoutList, Columns, Package, TrendingUp, Clock, DollarSign } from 'lucide-react'
+import { Plus, Search, LayoutList, Columns } from 'lucide-react'
 import { DataTable } from '@/components/shared/DataTable'
 import { StatusBadge } from '@/components/shared/StatusBadge'
 import type { Column } from '@/components/shared/DataTable'
@@ -142,14 +142,13 @@ function BoardView({ loads }: { loads: Load[] }) {
 
 const activeLoads = MOCK_LOADS.filter(l => !['completed', 'cancelled'].includes(l.status))
 const inTransit = MOCK_LOADS.filter(l => l.status === 'in_transit')
-const completedLoads = MOCK_LOADS.filter(l => l.status === 'completed')
 const avgMargin = MOCK_LOADS.reduce((sum, l) => sum + (l.margin_percentage ?? 0), 0) / MOCK_LOADS.length
 
 const KPI_STRIP = [
-  { label: 'Total Loads', value: String(MOCK_LOADS.length), icon: Package },
-  { label: 'Active', value: String(activeLoads.length), icon: Clock },
-  { label: 'In Transit', value: String(inTransit.length), icon: TrendingUp },
-  { label: 'Avg Margin', value: `${avgMargin.toFixed(1)}%`, icon: DollarSign },
+  { label: 'Total Loads', value: String(MOCK_LOADS.length), sub: '' },
+  { label: 'Active', value: String(activeLoads.length), sub: '' },
+  { label: 'In Transit', value: String(inTransit.length), sub: '' },
+  { label: 'Avg Margin', value: `${avgMargin.toFixed(1)}%`, sub: '' },
 ]
 
 export default function LoadsListPage() {
@@ -173,22 +172,32 @@ export default function LoadsListPage() {
   return (
     <div className="p-4 md:p-6 w-full space-y-5">
 
+      {/* Page header */}
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-zinc-50 tracking-tight">Loads</h1>
+          <p className="text-sm text-gray-400 dark:text-zinc-500 mt-1">All freight movements</p>
+        </div>
+        <button
+          onClick={() => navigate('/dashboard/loads/new')}
+          className="flex items-center gap-2 h-9 px-4 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-700 transition-colors"
+        >
+          <Plus className="h-3.5 w-3.5" />
+          New Load
+        </button>
+      </div>
+
       {/* KPI Strip */}
       <motion.div
-        className="grid grid-cols-2 md:grid-cols-4 gap-4"
-        initial={{ opacity: 0, y: 10 }}
+        className="flex flex-wrap items-start gap-x-12 gap-y-6 border-b border-gray-100 dark:border-zinc-800 pb-8"
+        initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
       >
-        {KPI_STRIP.map(({ label, value, icon: Icon }) => (
-          <div key={label} className="rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-wide">{label}</p>
-              <div className="h-8 w-8 rounded-lg bg-gray-50 dark:bg-zinc-800 border border-gray-100 dark:border-zinc-700 flex items-center justify-center text-gray-400 dark:text-zinc-500">
-                <Icon className="h-4 w-4" />
-              </div>
-            </div>
-            <p className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-zinc-50 tabular-nums tracking-tight">{value}</p>
+        {KPI_STRIP.map(({ label, value, sub }) => (
+          <div key={label}>
+            <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-widest">{label}</p>
+            <p className="text-3xl font-bold tabular-nums tracking-tight mt-1 text-gray-900 dark:text-zinc-50">{value}</p>
+            {sub && <p className="text-xs mt-0.5 text-gray-400 dark:text-zinc-500">{sub}</p>}
           </div>
         ))}
       </motion.div>
@@ -242,15 +251,6 @@ export default function LoadsListPage() {
             <Columns className="h-3.5 w-3.5" />
           </button>
         </div>
-
-        {/* New Load */}
-        <button
-          onClick={() => navigate('/dashboard/loads/new')}
-          className="flex items-center gap-2 h-9 px-4 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-700 transition-colors"
-        >
-          <Plus className="h-3.5 w-3.5" />
-          New Load
-        </button>
       </motion.div>
 
       {/* Selection bar */}

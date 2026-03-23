@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Upload, FileText, Download, Files, ShieldCheck, ClipboardList } from 'lucide-react'
+import { Upload, FileText, Download } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
 
@@ -49,37 +49,45 @@ export default function DocumentsPage() {
   return (
     <div className="p-4 md:p-6 w-full space-y-5">
 
+      {/* Page header */}
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-zinc-50 tracking-tight">Documents</h1>
+          <p className="text-sm text-gray-400 dark:text-zinc-500 mt-1">Compliance document storage & renewals</p>
+        </div>
+        <button className="h-9 px-4 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-700 dark:bg-white dark:text-zinc-900 dark:hover:bg-gray-100 transition-colors flex items-center gap-2">
+          <Upload className="h-3.5 w-3.5" />
+          Upload Document
+        </button>
+      </div>
+
       {/* KPI strip */}
       <motion.div
-        className="grid grid-cols-2 md:grid-cols-4 gap-4"
+        className="flex flex-wrap items-start gap-x-12 gap-y-6 border-b border-gray-100 dark:border-zinc-800 pb-8"
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
       >
         {[
-          { label: 'Total Documents',   value: String(DOCUMENTS.length), sub: 'All document types',      icon: Files       },
-          { label: 'BOLs & PODs',       value: String(bols + pods),      sub: `${bols} BOLs · ${pods} PODs`, icon: FileText },
-          { label: 'Compliance Docs',   value: String(compliance),       sub: 'Licenses, inspections',  icon: ShieldCheck },
-          { label: 'Recent Uploads',    value: '4',                      sub: 'Last 7 days',            icon: ClipboardList },
-        ].map(({ label, value, sub, icon: Icon }) => (
-          <div key={label} className="rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-wide">{label}</p>
-              <div className="h-8 w-8 rounded-lg bg-gray-50 dark:bg-zinc-800 border border-gray-100 dark:border-zinc-700 flex items-center justify-center text-gray-400 dark:text-zinc-500"><Icon className="h-4 w-4" /></div>
-            </div>
-            <p className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-zinc-50 tabular-nums tracking-tight">{value}</p>
-            <p className="text-[11px] text-gray-400 dark:text-zinc-500 mt-1">{sub}</p>
+          { label: 'Total Documents',   value: String(DOCUMENTS.length), sub: 'All document types' },
+          { label: 'BOLs & PODs',       value: String(bols + pods),      sub: `${bols} BOLs · ${pods} PODs` },
+          { label: 'Compliance Docs',   value: String(compliance),       sub: 'Licenses, inspections' },
+          { label: 'Recent Uploads',    value: '4',                      sub: 'Last 7 days' },
+        ].map(({ label, value, sub }) => (
+          <div key={label}>
+            <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-widest">{label}</p>
+            <p className="text-3xl font-bold tabular-nums tracking-tight mt-1 text-gray-900 dark:text-zinc-50">{value}</p>
+            {sub && <p className="text-xs mt-0.5 text-gray-400 dark:text-zinc-500">{sub}</p>}
           </div>
         ))}
       </motion.div>
 
-      {/* Controls */}
+      {/* Filter tabs */}
       <motion.div
-        className="flex items-center justify-between"
+        className="flex items-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.05 }}
       >
-        {/* Filter tabs */}
         <div className="flex items-center gap-1 bg-gray-100 dark:bg-zinc-800 rounded-lg p-1">
           {FILTERS.map(f => (
             <button
@@ -94,11 +102,6 @@ export default function DocumentsPage() {
             </button>
           ))}
         </div>
-
-        <button className="h-9 px-4 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-700 dark:bg-white dark:text-zinc-900 dark:hover:bg-gray-100 transition-colors flex items-center gap-2">
-          <Upload className="h-3.5 w-3.5" />
-          Upload Document
-        </button>
       </motion.div>
 
       {/* Documents table */}

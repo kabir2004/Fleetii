@@ -1,4 +1,4 @@
-import { Bell, Search, ChevronDown, Sun, Moon } from 'lucide-react'
+import { Bell, Search, ChevronDown, Sun, Moon, Menu } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { useUIStore } from '@/stores/uiStore'
 import { useAuthStore } from '@/stores/authStore'
-import { getInitials } from '@/lib/formatters'
+import { getInitials, CURRENT_MONTH_LABEL } from '@/lib/formatters'
 import { MOCK_NOTIFICATIONS } from '@/lib/mockData'
 
 function LiveClock() {
@@ -28,9 +28,10 @@ function LiveClock() {
 
 interface TopbarProps {
   onOpenCommandPalette?: () => void
+  onMobileMenuOpen?: () => void
 }
 
-export function Topbar({ onOpenCommandPalette }: TopbarProps) {
+export function Topbar({ onOpenCommandPalette, onMobileMenuOpen }: TopbarProps) {
   const navigate = useNavigate()
   const { setNotificationPanelOpen, darkMode, toggleDarkMode } = useUIStore()
   const { user, signOut } = useAuthStore()
@@ -45,7 +46,16 @@ export function Topbar({ onOpenCommandPalette }: TopbarProps) {
   const initials    = user ? getInitials(user.first_name, user.last_name) : 'DU'
 
   return (
-    <header className="h-14 border-b border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex items-center px-3 sm:px-6 gap-2 sm:gap-4 shrink-0">
+    <header className="h-14 border-b border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 flex items-center px-3 sm:px-6 gap-2 sm:gap-4 shrink-0 min-w-0">
+
+      {/* Hamburger — mobile only */}
+      <button
+        onClick={onMobileMenuOpen}
+        className="md:hidden h-9 w-9 rounded-lg flex items-center justify-center text-gray-500 dark:text-zinc-400 hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-gray-700 dark:hover:text-zinc-200 transition-colors shrink-0"
+        aria-label="Open navigation"
+      >
+        <Menu className="h-5 w-5" />
+      </button>
 
       {/* Search */}
       <button
@@ -57,28 +67,28 @@ export function Topbar({ onOpenCommandPalette }: TopbarProps) {
         <kbd className="ml-auto text-xs bg-white dark:bg-zinc-700 border border-gray-200 dark:border-zinc-600 rounded px-1.5 py-0.5 text-gray-400 dark:text-zinc-400">⌘K</kbd>
       </button>
 
-      <span className="hidden lg:block text-sm text-gray-400 dark:text-zinc-500 truncate">Northbound Freight LLC · March 2024</span>
+      <span className="hidden lg:block text-sm text-gray-400 dark:text-zinc-500 truncate">Northbound Freight LLC · {CURRENT_MONTH_LABEL}</span>
 
       <div className="flex-1" />
 
       {/* Dark mode toggle */}
       <button
         onClick={toggleDarkMode}
-        className="h-9 w-9 rounded-lg flex items-center justify-center text-gray-500 dark:text-zinc-400 hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-gray-700 dark:hover:text-zinc-200 transition-colors"
+        className="h-9 w-9 rounded-lg flex items-center justify-center text-gray-500 dark:text-zinc-400 hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-gray-700 dark:hover:text-zinc-200 transition-colors shrink-0"
         aria-label="Toggle dark mode"
       >
         {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
       </button>
 
       {/* Live clock */}
-      <span className="hidden sm:block">
+      <span className="hidden sm:block shrink-0">
         <LiveClock />
       </span>
 
       {/* Notifications */}
       <button
         onClick={() => setNotificationPanelOpen(true)}
-        className="relative h-9 w-9 rounded-lg flex items-center justify-center text-gray-500 dark:text-zinc-400 hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-gray-700 dark:hover:text-zinc-200 transition-colors"
+        className="relative h-9 w-9 rounded-lg flex items-center justify-center text-gray-500 dark:text-zinc-400 hover:bg-gray-100 dark:hover:bg-zinc-800 hover:text-gray-700 dark:hover:text-zinc-200 transition-colors shrink-0"
       >
         <Bell className="h-4 w-4" />
         {unreadCount > 0 && (
@@ -91,7 +101,7 @@ export function Topbar({ onOpenCommandPalette }: TopbarProps) {
       {/* User Menu */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="flex items-center gap-2 rounded-lg px-2 py-1.5 hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors">
+          <button className="flex items-center gap-2 rounded-lg px-2 py-1.5 hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors shrink-0">
             <Avatar className="h-7 w-7">
               <AvatarFallback className="text-xs bg-gray-900 dark:bg-white text-white dark:text-gray-900">{initials}</AvatarFallback>
             </Avatar>

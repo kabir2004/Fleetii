@@ -4,7 +4,7 @@ import { ArrowLeft, CheckCircle2, AlertTriangle } from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { StatusBadge } from '@/components/shared/StatusBadge'
-import { formatDate, formatCurrency, getInitials } from '@/lib/formatters'
+import { formatDate, formatCurrency, getInitials, CURRENT_MONTH_LABEL } from '@/lib/formatters'
 import { MOCK_DRIVERS, MOCK_LOADS } from '@/lib/mockData'
 import { cn } from '@/lib/utils'
 
@@ -79,7 +79,7 @@ export default function DriverDetailPage() {
           {[
             { label: 'YTD Miles',        value: `${driver.ytd_miles?.toLocaleString() ?? '—'} mi`, sub: 'Year to date' },
             { label: 'YTD Earnings',     value: formatCurrency(driver.ytd_earnings ?? 0),           sub: `$${driver.pay_rate?.toFixed(2)}/mi` },
-            { label: 'Loads This Month', value: String(driverLoads.length),                         sub: 'March 2024' },
+            { label: 'Loads This Month', value: String(driverLoads.length),                         sub: CURRENT_MONTH_LABEL },
             { label: 'Safety Score',     value: `${score.toFixed(1)}/10`,                           sub: score >= 9 ? 'Excellent' : score >= 7 ? 'Good' : 'Needs review', scoreColor: safetyColor(score) },
           ].map(({ label, value, sub, scoreColor }) => (
             <div key={label} className="rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">

@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion'
-import { Shield, AlertTriangle, TrendingUp, Activity } from 'lucide-react'
-import { getInitials } from '@/lib/formatters'
+import { getInitials, CURRENT_MONTH_LABEL } from '@/lib/formatters'
 import { MOCK_DRIVERS } from '@/lib/mockData'
 import { cn } from '@/lib/utils'
 
@@ -31,27 +30,30 @@ export default function SafetyPage() {
   return (
     <div className="p-4 md:p-6 w-full space-y-5">
 
+      {/* Page header */}
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-zinc-50 tracking-tight">Safety</h1>
+          <p className="text-sm text-gray-400 dark:text-zinc-500 mt-1">Driver safety scores & incident management</p>
+        </div>
+      </div>
+
       {/* KPI strip */}
       <motion.div
-        className="grid grid-cols-2 md:grid-cols-4 gap-4"
+        className="flex flex-wrap items-start gap-x-12 gap-y-6 border-b border-gray-100 dark:border-zinc-800 pb-8"
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
       >
         {[
-          { label: 'Fleet Avg Safety Score', value: `${avgScore.toFixed(1)}/10`, sub: 'Driver average',          icon: Shield,      alert: false            },
-          { label: 'Incidents YTD',           value: String(INCIDENTS_YTD),      sub: 'Accidents & violations',  icon: AlertTriangle,alert: INCIDENTS_YTD > 0 },
-          { label: 'HOS Violations (30d)',    value: String(HOS_VIOLATIONS),     sub: 'Hours-of-service',        icon: Activity,    alert: HOS_VIOLATIONS > 0 },
-          { label: 'Drivers at Risk',         value: String(atRisk),             sub: 'Score below 7.5',         icon: TrendingUp,  alert: atRisk > 0        },
-        ].map(({ label, value, sub, icon: Icon, alert }) => (
-          <div key={label} className="rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-wide">{label}</p>
-              <div className="h-8 w-8 rounded-lg bg-gray-50 dark:bg-zinc-800 border border-gray-100 dark:border-zinc-700 flex items-center justify-center text-gray-400 dark:text-zinc-500">
-                <Icon className="h-4 w-4" />
-              </div>
-            </div>
-            <p className={cn('text-2xl sm:text-3xl font-bold tabular-nums tracking-tight', alert ? 'text-amber-600' : 'text-gray-900 dark:text-zinc-50')}>{value}</p>
-            <p className={cn('text-xs mt-1.5', alert ? 'text-amber-500' : 'text-gray-400 dark:text-zinc-500')}>{sub}</p>
+          { label: 'Fleet Avg Safety Score', value: `${avgScore.toFixed(1)}/10`, sub: 'Driver average',         alert: false             },
+          { label: 'Incidents YTD',           value: String(INCIDENTS_YTD),      sub: 'Accidents & violations', alert: INCIDENTS_YTD > 0 },
+          { label: 'HOS Violations (30d)',    value: String(HOS_VIOLATIONS),     sub: 'Hours-of-service',       alert: HOS_VIOLATIONS > 0 },
+          { label: 'Drivers at Risk',         value: String(atRisk),             sub: 'Score below 7.5',        alert: atRisk > 0        },
+        ].map(({ label, value, sub, alert }) => (
+          <div key={label}>
+            <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-widest">{label}</p>
+            <p className={cn('text-3xl font-bold tabular-nums tracking-tight mt-1', alert ? 'text-amber-600' : 'text-gray-900 dark:text-zinc-50')}>{value}</p>
+            {sub && <p className={cn('text-xs mt-0.5', alert ? 'text-amber-500' : 'text-gray-400 dark:text-zinc-500')}>{sub}</p>}
           </div>
         ))}
       </motion.div>
@@ -65,7 +67,7 @@ export default function SafetyPage() {
       >
         <div className="px-6 py-4 border-b border-gray-100 dark:border-zinc-800">
           <p className="text-sm font-semibold text-gray-800 dark:text-zinc-100">Driver Safety Rankings</p>
-          <p className="text-xs text-gray-400 dark:text-zinc-500 mt-0.5">Sorted by safety score · March 2024</p>
+          <p className="text-xs text-gray-400 dark:text-zinc-500 mt-0.5">Sorted by safety score · {CURRENT_MONTH_LABEL}</p>
         </div>
         <div className="overflow-x-auto"><table className="w-full">
           <thead>

@@ -22,20 +22,20 @@ const VALUES = [
 export default function AboutPage() {
   return (
     <div className="bg-white">
-      <section className="max-w-6xl mx-auto px-6 py-24">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24">
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-950 tracking-tight mb-6 leading-[1.05] max-w-2xl">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-950 tracking-tight mb-6 leading-[1.05] max-w-2xl">
             About Fleetii.
           </h1>
           <p className="text-lg text-gray-500 mb-20 max-w-2xl leading-relaxed">
             We're building financial software for trucking companies, an industry that has been underserved by software for decades.
           </p>
 
-          <div className="grid md:grid-cols-3 gap-5 mb-20">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-20">
             {VALUES.map((item, i) => (
               <motion.div
                 key={item.title}
@@ -53,7 +53,7 @@ export default function AboutPage() {
             ))}
           </div>
 
-          <div className="grid md:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <div className="rounded-2xl border border-gray-200 bg-white p-10">
               <h2 className="text-2xl font-bold text-gray-950 tracking-tight mb-4">Our mission</h2>
               <p className="text-gray-500 leading-relaxed mb-4 text-[15px]">

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Search, Upload, Plus, ShieldAlert, FileText, Clock, CheckCircle } from 'lucide-react'
+import { Search, Upload, Plus, ShieldAlert } from 'lucide-react'
 import { StatusBadge } from '@/components/shared/StatusBadge'
 import { formatCurrency, formatDate } from '@/lib/formatters'
 import { MOCK_INVOICES } from '@/lib/mockData'
@@ -49,27 +49,40 @@ export default function InvoicesPage() {
   return (
     <div className="p-4 md:p-6 w-full space-y-5">
 
+      {/* Page header */}
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-zinc-50 tracking-tight">Invoices</h1>
+          <p className="text-sm text-gray-400 dark:text-zinc-500 mt-1">Accounts payable & receivable</p>
+        </div>
+        <div className="flex gap-2">
+          <button className="h-9 px-4 rounded-lg border border-gray-200 dark:border-zinc-700 text-sm text-gray-600 dark:text-zinc-400 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors flex items-center gap-2">
+            <Upload className="h-3.5 w-3.5" />
+            Upload
+          </button>
+          <button className="h-9 px-4 rounded-lg bg-gray-900 dark:bg-white text-white dark:text-zinc-900 text-sm font-medium hover:bg-gray-700 dark:hover:bg-gray-100 transition-colors flex items-center gap-2">
+            <Plus className="h-3.5 w-3.5" />
+            Create Invoice
+          </button>
+        </div>
+      </div>
+
       {/* KPI strip */}
       <motion.div
-        className="grid grid-cols-2 md:grid-cols-4 gap-4"
+        className="flex flex-wrap items-start gap-x-12 gap-y-6 border-b border-gray-100 dark:border-zinc-800 pb-8"
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
       >
         {[
-          { label: 'Outstanding Payable',   value: formatCurrency(totalPayable),    sub: 'Awaiting payment',           icon: FileText,   alert: false },
-          { label: 'Outstanding Receivable',value: formatCurrency(totalReceivable),  sub: 'To be collected',            icon: Clock,      alert: overdue > 0 },
-          { label: 'Disputed',              value: String(disputed),                 sub: `${disputed} invoice${disputed !== 1 ? 's' : ''} under review`, icon: ShieldAlert, alert: disputed > 0 },
-          { label: 'Savings Identified',    value: formatCurrency(totalSavings),     sub: 'Audit engine recoveries',    icon: CheckCircle, alert: false },
-        ].map(({ label, value, sub, icon: Icon, alert }) => (
-          <div key={label} className="rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-wide">{label}</p>
-              <div className="h-8 w-8 rounded-lg bg-gray-50 dark:bg-zinc-800 border border-gray-100 dark:border-zinc-700 flex items-center justify-center text-gray-400 dark:text-zinc-500">
-                <Icon className="h-4 w-4" />
-              </div>
-            </div>
-            <p className={cn('text-2xl sm:text-3xl font-bold tabular-nums tracking-tight', alert ? 'text-amber-600' : 'text-gray-900 dark:text-zinc-50')}>{value}</p>
-            <p className={cn('text-xs mt-1.5', alert ? 'text-amber-500' : 'text-gray-400 dark:text-zinc-500')}>{sub}</p>
+          { label: 'Outstanding Payable',    value: formatCurrency(totalPayable),    sub: 'Awaiting payment',                                                      alert: false },
+          { label: 'Outstanding Receivable', value: formatCurrency(totalReceivable), sub: 'To be collected',                                                        alert: overdue > 0 },
+          { label: 'Disputed',               value: String(disputed),                sub: `${disputed} invoice${disputed !== 1 ? 's' : ''} under review`,           alert: disputed > 0 },
+          { label: 'Savings Identified',     value: formatCurrency(totalSavings),    sub: 'Audit engine recoveries',                                                 alert: false },
+        ].map(({ label, value, sub, alert }) => (
+          <div key={label}>
+            <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-widest">{label}</p>
+            <p className={cn('text-3xl font-bold tabular-nums tracking-tight mt-1', alert ? 'text-amber-600' : 'text-gray-900 dark:text-zinc-50')}>{value}</p>
+            {sub && <p className={cn('text-xs mt-0.5', alert ? 'text-amber-500' : 'text-gray-400 dark:text-zinc-500')}>{sub}</p>}
           </div>
         ))}
       </motion.div>
@@ -143,17 +156,6 @@ export default function InvoicesPage() {
               {s === 'all' ? 'All' : s.replace('_', ' ').replace(/\b\w/g, c => c.toUpperCase())}
             </button>
           ))}
-        </div>
-
-        <div className="ml-auto flex gap-2">
-          <button className="h-9 px-4 rounded-lg border border-gray-200 dark:border-zinc-700 text-sm text-gray-600 dark:text-zinc-400 hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors flex items-center gap-2">
-            <Upload className="h-3.5 w-3.5" />
-            Upload
-          </button>
-          <button className="h-9 px-4 rounded-lg bg-gray-900 dark:bg-white text-white dark:text-zinc-900 text-sm font-medium hover:bg-gray-700 dark:hover:bg-gray-100 transition-colors flex items-center gap-2">
-            <Plus className="h-3.5 w-3.5" />
-            Create Invoice
-          </button>
         </div>
       </motion.div>
 

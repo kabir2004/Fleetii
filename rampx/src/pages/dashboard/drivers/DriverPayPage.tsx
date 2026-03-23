@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { StatusBadge } from '@/components/shared/StatusBadge'
-import { formatCurrency, getInitials } from '@/lib/formatters'
+import { formatCurrency, getInitials, CURRENT_MONTH_LABEL } from '@/lib/formatters'
 import { MOCK_DRIVERS } from '@/lib/mockData'
 
 export default function DriverPayPage() {
@@ -13,7 +13,7 @@ export default function DriverPayPage() {
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-zinc-50">Driver Pay</h1>
-          <p className="text-sm text-gray-400 dark:text-zinc-500 mt-1">Settlements and pay stubs — March 2024</p>
+          <p className="text-sm text-gray-400 dark:text-zinc-500 mt-1">Settlements and pay stubs — {CURRENT_MONTH_LABEL}</p>
         </div>
         <Button variant="outline" className="gap-2"><Download className="h-4 w-4" />Export All</Button>
       </div>

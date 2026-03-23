@@ -3,8 +3,8 @@ import {
   AreaChart, Area, XAxis, YAxis,
   CartesianGrid, Tooltip, ResponsiveContainer, ComposedChart, Line,
 } from 'recharts'
-import { TrendingUp, TrendingDown, DollarSign, ShieldCheck, Receipt, ArrowRight } from 'lucide-react'
-import { formatCurrency } from '@/lib/formatters'
+import { ArrowRight } from 'lucide-react'
+import { formatCurrency, CURRENT_MONTH_LABEL } from '@/lib/formatters'
 import { MOCK_SPEND_BY_MONTH, MOCK_SPEND_BY_CARRIER, MOCK_TOP_LANES, MOCK_SAVINGS } from '@/lib/mockData'
 import { cn } from '@/lib/utils'
 import { useUIStore } from '@/stores/uiStore'
@@ -70,9 +70,17 @@ export default function SpendOverviewPage() {
   return (
     <div className="p-4 md:p-6 w-full space-y-5">
 
+      {/* Page header */}
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-zinc-50 tracking-tight">Spend</h1>
+          <p className="text-sm text-gray-400 dark:text-zinc-500 mt-1">Revenue, cost & margin analysis</p>
+        </div>
+      </div>
+
       {/* KPI strip */}
       <motion.div
-        className="grid grid-cols-2 md:grid-cols-4 gap-4"
+        className="flex flex-wrap items-start gap-x-12 gap-y-6 border-b border-gray-100 dark:border-zinc-800 pb-8"
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
       >
@@ -81,44 +89,31 @@ export default function SpendOverviewPage() {
             label: 'Total Spend — March',
             value: formatCurrency(totalSpend),
             sub: `${spendDelta > 0 ? '+' : ''}${spendDelta.toFixed(1)}% vs February`,
-            up: spendDelta > 0,
-            icon: DollarSign,
+            alert: false,
           },
           {
             label: 'Gross Margin',
             value: formatCurrency(grossMargin),
             sub: `${marginPct.toFixed(1)}% margin rate`,
-            up: true,
-            icon: TrendingUp,
+            alert: false,
           },
           {
             label: 'YTD Spend',
             value: formatCurrency(ytdSpend),
             sub: `${MOCK_SPEND_BY_MONTH.length} months tracked`,
-            up: null,
-            icon: Receipt,
+            alert: false,
           },
           {
             label: 'YTD Savings Found',
             value: formatCurrency(ytdSavings),
             sub: 'Audit engine recoveries',
-            up: true,
-            icon: ShieldCheck,
+            alert: false,
           },
-        ].map(({ label, value, sub, up, icon: Icon }) => (
-          <div key={label} className="rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-wide">{label}</p>
-              <div className="h-8 w-8 rounded-lg bg-gray-50 dark:bg-zinc-800 border border-gray-100 dark:border-zinc-700 flex items-center justify-center text-gray-400 dark:text-zinc-500"><Icon className="h-4 w-4" /></div>
-            </div>
-            <p className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-zinc-50 tabular-nums tracking-tight">{value}</p>
-            <p className={cn('text-xs mt-1.5 flex items-center gap-1',
-              up === true ? 'text-green-600' : up === false ? 'text-red-500' : 'text-gray-400 dark:text-zinc-500'
-            )}>
-              {up === true && <TrendingUp className="h-3 w-3" />}
-              {up === false && <TrendingDown className="h-3 w-3" />}
-              {sub}
-            </p>
+        ].map(({ label, value, sub, alert }) => (
+          <div key={label}>
+            <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-widest">{label}</p>
+            <p className={cn('text-3xl font-bold tabular-nums tracking-tight mt-1', alert ? 'text-amber-600' : 'text-gray-900 dark:text-zinc-50')}>{value}</p>
+            {sub && <p className={cn('text-xs mt-0.5', alert ? 'text-amber-500' : 'text-gray-400 dark:text-zinc-500')}>{sub}</p>}
           </div>
         ))}
       </motion.div>
@@ -195,7 +190,7 @@ export default function SpendOverviewPage() {
           transition={{ delay: 0.08 }}
         >
           <p className="text-sm font-semibold text-gray-800 dark:text-zinc-100 mb-1">Spend by Category</p>
-          <p className="text-xs text-gray-400 dark:text-zinc-500 mb-5">March 2024 · {formatCurrency(totalSpend)} total</p>
+          <p className="text-xs text-gray-400 dark:text-zinc-500 mb-5">{CURRENT_MONTH_LABEL} · {formatCurrency(totalSpend)} total</p>
 
           <div className="space-y-4">
             {SPEND_BREAKDOWN.map(item => (
@@ -234,7 +229,7 @@ export default function SpendOverviewPage() {
           <div className="px-6 py-4 border-b border-gray-100 dark:border-zinc-800 flex items-center justify-between">
             <div>
               <p className="text-sm font-semibold text-gray-800 dark:text-zinc-100">Top Carriers by Spend</p>
-              <p className="text-xs text-gray-400 dark:text-zinc-500 mt-0.5">March 2024</p>
+              <p className="text-xs text-gray-400 dark:text-zinc-500 mt-0.5">{CURRENT_MONTH_LABEL}</p>
             </div>
             <button className="text-xs text-gray-400 dark:text-zinc-500 hover:text-gray-700 dark:hover:text-zinc-200 flex items-center gap-1 transition-colors">
               View all <ArrowRight className="h-3 w-3" />
@@ -280,7 +275,7 @@ export default function SpendOverviewPage() {
           <div className="px-6 py-4 border-b border-gray-100 dark:border-zinc-800 flex items-center justify-between">
             <div>
               <p className="text-sm font-semibold text-gray-800 dark:text-zinc-100">Top Lanes by Volume</p>
-              <p className="text-xs text-gray-400 dark:text-zinc-500 mt-0.5">March 2024 · avg rate per load</p>
+              <p className="text-xs text-gray-400 dark:text-zinc-500 mt-0.5">{CURRENT_MONTH_LABEL} · avg rate per load</p>
             </div>
             <button className="text-xs text-gray-400 dark:text-zinc-500 hover:text-gray-700 dark:hover:text-zinc-200 flex items-center gap-1 transition-colors">
               View all <ArrowRight className="h-3 w-3" />

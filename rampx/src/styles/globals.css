@@ -52,10 +52,16 @@
     @apply border-border;
   }
 
+  html {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+  }
+
   body {
-    font-family: 'Arimo', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
     @apply bg-white dark:bg-black text-gray-900 dark:text-zinc-50 antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   h1, h2, h3, h4, h5, h6, p, span, div, button, input, textarea, select, label {

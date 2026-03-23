@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowUpRight, ArrowDownLeft, Plus, Search, Clock } from 'lucide-react'
+import { ArrowUpRight, ArrowDownLeft, Plus, Search } from 'lucide-react'
 import { formatCurrency, formatDate } from '@/lib/formatters'
 import { MOCK_PAYMENTS } from '@/lib/mockData'
 import { cn } from '@/lib/utils'
@@ -43,25 +43,34 @@ export default function PaymentsPage() {
   return (
     <div className="p-4 md:p-6 w-full space-y-5">
 
+      {/* Page header */}
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-zinc-50 tracking-tight">Payments</h1>
+          <p className="text-sm text-gray-400 dark:text-zinc-500 mt-1">Payment history & processing</p>
+        </div>
+        <button className="h-9 px-4 rounded-lg bg-gray-900 dark:bg-white text-white dark:text-zinc-900 text-sm font-medium hover:bg-gray-700 dark:hover:bg-gray-100 transition-colors flex items-center gap-2">
+          <Plus className="h-3.5 w-3.5" />
+          New Payment
+        </button>
+      </div>
+
       {/* KPI strip */}
       <motion.div
-        className="grid grid-cols-2 md:grid-cols-4 gap-4"
+        className="flex flex-wrap items-start gap-x-12 gap-y-6 border-b border-gray-100 dark:border-zinc-800 pb-8"
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
       >
         {[
-          { label: 'Outgoing (MTD)',  value: formatCurrency(totalOut),  sub: `${outgoing.length} payments`,  icon: ArrowUpRight,   neg: true  },
-          { label: 'Incoming (MTD)',  value: formatCurrency(totalIn),   sub: `${incoming.length} payments`,  icon: ArrowDownLeft,  neg: false },
-          { label: 'Net Cash Flow',  value: formatCurrency(netFlow),   sub: netFlow >= 0 ? 'Positive' : 'Negative', icon: ArrowDownLeft, neg: netFlow < 0 },
-          { label: 'Pending',        value: String(pendingCount),      sub: 'Awaiting processing',           icon: Clock,          neg: pendingCount > 0 },
-        ].map(({ label, value, sub, icon: Icon, neg }) => (
-          <div key={label} className="rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-wide">{label}</p>
-              <div className="h-8 w-8 rounded-lg bg-gray-50 dark:bg-zinc-800 border border-gray-100 dark:border-zinc-700 flex items-center justify-center text-gray-400 dark:text-zinc-500"><Icon className="h-4 w-4" /></div>
-            </div>
-            <p className={cn('text-2xl sm:text-3xl font-bold tabular-nums tracking-tight', neg ? 'text-red-600' : 'text-gray-900 dark:text-zinc-50')}>{value}</p>
-            <p className="text-[11px] text-gray-400 dark:text-zinc-500 mt-1">{sub}</p>
+          { label: 'Outgoing (MTD)', value: formatCurrency(totalOut), sub: `${outgoing.length} payments`,             neg: true  },
+          { label: 'Incoming (MTD)', value: formatCurrency(totalIn),  sub: `${incoming.length} payments`,             neg: false },
+          { label: 'Net Cash Flow',  value: formatCurrency(netFlow),  sub: netFlow >= 0 ? 'Positive' : 'Negative',   neg: netFlow < 0 },
+          { label: 'Pending',        value: String(pendingCount),     sub: 'Awaiting processing',                     neg: pendingCount > 0 },
+        ].map(({ label, value, sub, neg }) => (
+          <div key={label}>
+            <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-widest">{label}</p>
+            <p className={cn('text-3xl font-bold tabular-nums tracking-tight mt-1', neg ? 'text-red-600' : 'text-gray-900 dark:text-zinc-50')}>{value}</p>
+            {sub && <p className="text-xs mt-0.5 text-gray-400 dark:text-zinc-500">{sub}</p>}
           </div>
         ))}
       </motion.div>
@@ -84,10 +93,6 @@ export default function PaymentsPage() {
             </button>
           ))}
         </div>
-        <button className="ml-auto h-9 px-4 rounded-lg bg-gray-900 dark:bg-white text-white dark:text-zinc-900 text-sm font-medium hover:bg-gray-700 dark:hover:bg-gray-100 transition-colors flex items-center gap-2">
-          <Plus className="h-3.5 w-3.5" />
-          New Payment
-        </button>
       </motion.div>
 
       {/* Table */}

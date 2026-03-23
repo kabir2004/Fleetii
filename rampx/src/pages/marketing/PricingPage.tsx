@@ -60,14 +60,14 @@ const PLANS = [
 export default function PricingPage() {
   return (
     <div className="bg-white">
-      <section className="max-w-6xl mx-auto px-6 py-24">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24">
         <motion.div
           className="mb-16"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <h1 className="text-5xl font-bold text-gray-950 tracking-tight mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-950 tracking-tight mb-4">
             Simple, transparent pricing.
           </h1>
           <p className="text-lg text-gray-500 max-w-xl">
@@ -75,7 +75,7 @@ export default function PricingPage() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {PLANS.map((plan, i) => (
             <motion.div
               key={plan.name}
@@ -89,7 +89,7 @@ export default function PricingPage() {
               transition={{ delay: i * 0.08 }}
             >
               {plan.popular && (
-                <div className="text-[10px] font-bold text-green-400 bg-green-400/10 border border-green-400/20 rounded-full px-3 py-1 w-fit mb-5 uppercase tracking-widest">
+                <div className="text-[10px] font-bold text-green-400 bg-green-400/10 border border-green-400/20 rounded-full px-3 py-1 w-fit mb-5 tracking-tight">
                   Most popular
                 </div>
               )}

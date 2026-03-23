@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion'
-import { Route, TrendingUp, DollarSign, MapPin } from 'lucide-react'
-import { formatCurrency } from '@/lib/formatters'
+import { formatCurrency, CURRENT_MONTH_LABEL } from '@/lib/formatters'
 import { MOCK_TOP_LANES } from '@/lib/mockData'
 import { cn } from '@/lib/utils'
 import { useUIStore } from '@/stores/uiStore'
@@ -24,26 +23,31 @@ export default function LaneAnalyticsPage() {
   return (
     <div className="p-4 md:p-6 w-full space-y-5">
 
+      {/* Page header */}
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-zinc-50 tracking-tight">Lane Analytics</h1>
+          <p className="text-sm text-gray-400 dark:text-zinc-500 mt-1">Route performance by corridor</p>
+        </div>
+      </div>
+
       {/* KPI strip */}
       <motion.div
-        className="grid grid-cols-2 md:grid-cols-4 gap-4"
+        className="flex flex-wrap items-start gap-x-12 gap-y-6 border-b border-gray-100 dark:border-zinc-800 pb-8"
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
       >
         {[
-          { label: 'Active Lanes',       value: String(MOCK_TOP_LANES.length), sub: 'March 2024',                              icon: Route      },
-          { label: 'Total Lane Revenue', value: formatCurrency(totalRevenue),  sub: `${totalLoads} loads`,                    icon: DollarSign },
-          { label: 'Total Miles Run',    value: `${totalMiles.toLocaleString()} mi`, sub: 'Across all lanes',                 icon: TrendingUp },
+          { label: 'Active Lanes',       value: String(MOCK_TOP_LANES.length), sub: CURRENT_MONTH_LABEL },
+          { label: 'Total Lane Revenue', value: formatCurrency(totalRevenue),  sub: `${totalLoads} loads` },
+          { label: 'Total Miles Run',    value: `${totalMiles.toLocaleString()} mi`, sub: 'Across all lanes' },
           { label: 'Best Rate Lane',     value: formatCurrency(bestLane.avg_rate),
-            sub: `${bestLane.origin.split(',')[0]} → ${bestLane.destination.split(',')[0]}`,                                   icon: MapPin     },
-        ].map(({ label, value, sub, icon: Icon }) => (
-          <div key={label} className="rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-wide">{label}</p>
-              <div className="h-8 w-8 rounded-lg bg-gray-50 dark:bg-zinc-800 border border-gray-100 dark:border-zinc-700 flex items-center justify-center text-gray-400 dark:text-zinc-500"><Icon className="h-4 w-4" /></div>
-            </div>
-            <p className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-zinc-50 tabular-nums tracking-tight">{value}</p>
-            <p className="text-[11px] text-gray-400 dark:text-zinc-500 mt-1">{sub}</p>
+            sub: `${bestLane.origin.split(',')[0]} → ${bestLane.destination.split(',')[0]}` },
+        ].map(({ label, value, sub }) => (
+          <div key={label}>
+            <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-widest">{label}</p>
+            <p className="text-3xl font-bold tabular-nums tracking-tight mt-1 text-gray-900 dark:text-zinc-50">{value}</p>
+            {sub && <p className="text-xs mt-0.5 text-gray-400 dark:text-zinc-500">{sub}</p>}
           </div>
         ))}
       </motion.div>
@@ -56,7 +60,7 @@ export default function LaneAnalyticsPage() {
         transition={{ delay: 0.05 }}
       >
         <p className="text-sm font-semibold text-gray-800 dark:text-zinc-100 mb-0.5">Total Revenue by Lane</p>
-        <p className="text-xs text-gray-400 dark:text-zinc-500 mb-5">Avg rate × loads · March 2024</p>
+        <p className="text-xs text-gray-400 dark:text-zinc-500 mb-5">Avg rate × loads · {CURRENT_MONTH_LABEL}</p>
         <div className="space-y-3">
           {chartData.map((lane, i) => {
             const maxRevenue = Math.max(...chartData.map(d => d.Revenue))

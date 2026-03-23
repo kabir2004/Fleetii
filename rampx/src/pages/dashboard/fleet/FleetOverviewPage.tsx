@@ -16,14 +16,13 @@ const STATUS_FILTERS = [
 
 const active      = MOCK_VEHICLES.filter(v => v.status === 'active').length
 const maintenance = MOCK_VEHICLES.filter(v => v.status === 'in_maintenance').length
-const oos         = MOCK_VEHICLES.filter(v => v.status === 'out_of_service').length
 const utilization = Math.round((active / MOCK_VEHICLES.length) * 100)
 
 const KPI_STRIP = [
-  { label: 'Total Vehicles',   value: String(MOCK_VEHICLES.length), icon: Truck },
-  { label: 'Active',           value: String(active),               icon: ShieldCheck },
-  { label: 'In Maintenance',   value: String(maintenance),          icon: Wrench },
-  { label: 'Fleet Utilization',value: `${utilization}%`,            icon: Gauge },
+  { label: 'Total Vehicles',    value: String(MOCK_VEHICLES.length), sub: '' },
+  { label: 'Active',            value: String(active),               sub: '' },
+  { label: 'In Maintenance',    value: String(maintenance),          sub: '' },
+  { label: 'Fleet Utilization', value: `${utilization}%`,           sub: '' },
 ]
 
 export default function FleetOverviewPage() {
@@ -48,30 +47,45 @@ export default function FleetOverviewPage() {
   return (
     <div className="p-4 md:p-6 w-full space-y-5">
 
+      {/* Page header */}
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 dark:text-zinc-50 tracking-tight">Fleet</h1>
+          <p className="text-sm text-gray-400 dark:text-zinc-500 mt-1">Vehicle inventory & management</p>
+        </div>
+        <button
+          onClick={() => navigate('/dashboard/fleet/new')}
+          className="flex items-center gap-2 h-9 px-4 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-700 transition-colors"
+        >
+          <Plus className="h-3.5 w-3.5" />
+          Add Vehicle
+        </button>
+      </div>
+
       {/* KPI Strip */}
-      <motion.div className="grid grid-cols-2 md:grid-cols-4 gap-4" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-        {KPI_STRIP.map(({ label, value, icon: Icon }) => (
-          <div key={label} className="rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-wide">{label}</p>
-              <div className="h-8 w-8 rounded-lg bg-gray-50 dark:bg-zinc-800 border border-gray-100 dark:border-zinc-700 flex items-center justify-center text-gray-400 dark:text-zinc-500">
-                <Icon className="h-4 w-4" />
-              </div>
-            </div>
-            <p className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-zinc-50 tabular-nums tracking-tight">{value}</p>
+      <motion.div
+        className="flex flex-wrap items-start gap-x-6 sm:gap-x-12 gap-y-4 sm:gap-y-6 border-b border-gray-100 dark:border-zinc-800 pb-8"
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        {KPI_STRIP.map(({ label, value, sub }) => (
+          <div key={label}>
+            <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-widest">{label}</p>
+            <p className="text-xl sm:text-3xl font-bold tabular-nums tracking-tight mt-1 text-gray-900 dark:text-zinc-50">{value}</p>
+            {sub && <p className="text-xs mt-0.5 text-gray-400 dark:text-zinc-500">{sub}</p>}
           </div>
         ))}
       </motion.div>
 
       {/* Controls */}
-      <motion.div className="flex flex-wrap items-center gap-3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}>
+      <motion.div className="flex flex-wrap gap-2 sm:gap-3" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}>
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400 dark:text-zinc-500" />
           <input
             placeholder="Search by unit, make, model..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="h-9 pl-8 pr-3 text-sm rounded-lg border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-50 placeholder:text-gray-400 dark:placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-zinc-100 focus:border-transparent w-72"
+            className="h-9 pl-8 pr-3 text-sm rounded-lg border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-50 placeholder:text-gray-400 dark:placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-zinc-100 focus:border-transparent w-full sm:w-72"
           />
         </div>
 
@@ -91,14 +105,6 @@ export default function FleetOverviewPage() {
             </button>
           ))}
         </div>
-
-        <button
-          onClick={() => navigate('/dashboard/fleet/new')}
-          className="ml-auto flex items-center gap-2 h-9 px-4 rounded-lg bg-gray-900 text-white text-sm font-medium hover:bg-gray-700 transition-colors"
-        >
-          <Plus className="h-3.5 w-3.5" />
-          Add Vehicle
-        </button>
       </motion.div>
 
       {/* Vehicle Cards */}

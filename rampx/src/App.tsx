@@ -77,6 +77,9 @@ import BillingSettingsPage from '@/pages/dashboard/settings/BillingSettingsPage'
 
 // Other
 import NotFoundPage from '@/pages/NotFoundPage'
+import InboxPage from '@/pages/dashboard/InboxPage'
+import VendorsPage from '@/pages/dashboard/VendorsPage'
+import ReferPage from '@/pages/dashboard/ReferPage'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -119,6 +122,9 @@ export default function App() {
           {/* Dashboard */}
           <Route element={<DashboardLayout />}>
             <Route path="/dashboard" element={<OverviewPage />} />
+            <Route path="/dashboard/inbox" element={<InboxPage />} />
+            <Route path="/dashboard/vendors" element={<VendorsPage />} />
+            <Route path="/dashboard/refer" element={<ReferPage />} />
 
             <Route path="/dashboard/loads" element={<LoadsListPage />} />
             <Route path="/dashboard/loads/new" element={<CreateLoadPage />} />

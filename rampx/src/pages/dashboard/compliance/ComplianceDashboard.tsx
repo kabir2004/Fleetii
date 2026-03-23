@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Shield, AlertTriangle, CheckCircle2, Clock, XCircle } from 'lucide-react'
+import { AlertTriangle, CheckCircle2, Clock, XCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const EXPIRING_DOCS = [
@@ -27,27 +27,30 @@ export default function ComplianceDashboard() {
   return (
     <div className="p-4 md:p-6 w-full space-y-5">
 
+      {/* Page header */}
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 dark:text-zinc-50 tracking-tight">Compliance</h1>
+          <p className="text-sm text-gray-400 dark:text-zinc-500 mt-1">Document tracking & regulatory status</p>
+        </div>
+      </div>
+
       {/* KPI strip */}
       <motion.div
-        className="grid grid-cols-2 md:grid-cols-4 gap-4"
+        className="flex flex-wrap items-start gap-x-6 sm:gap-x-12 gap-y-4 sm:gap-y-6 border-b border-gray-100 dark:border-zinc-800 pb-8"
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
       >
         {[
-          { label: 'Valid Documents',  value: String(allClear),     sub: 'No action needed',    icon: CheckCircle2, alert: false },
-          { label: 'Expiring (90 d)', value: String(expiringSoon), sub: 'Renew proactively',    icon: Clock,        alert: expiringSoon > 0 },
-          { label: 'Critical (30 d)', value: String(critical),     sub: 'Renew immediately',    icon: AlertTriangle,alert: critical > 0 },
-          { label: 'Overdue',          value: String(overdue),      sub: 'Past expiration date', icon: Shield,       alert: overdue > 0 },
-        ].map(({ label, value, sub, icon: Icon, alert }) => (
-          <div key={label} className="rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-wide">{label}</p>
-              <div className="h-8 w-8 rounded-lg bg-gray-50 dark:bg-zinc-800 border border-gray-100 dark:border-zinc-700 flex items-center justify-center text-gray-400 dark:text-zinc-500">
-                <Icon className="h-4 w-4" />
-              </div>
-            </div>
-            <p className={cn('text-2xl sm:text-3xl font-bold tabular-nums tracking-tight', alert ? 'text-amber-600' : 'text-gray-900 dark:text-zinc-50')}>{value}</p>
-            <p className={cn('text-xs mt-1.5', alert ? 'text-amber-500' : 'text-gray-400 dark:text-zinc-500')}>{sub}</p>
+          { label: 'Valid Documents',  value: String(allClear),     sub: 'No action needed',    alert: false },
+          { label: 'Expiring (90 d)', value: String(expiringSoon), sub: 'Renew proactively',    alert: expiringSoon > 0 },
+          { label: 'Critical (30 d)', value: String(critical),     sub: 'Renew immediately',    alert: critical > 0 },
+          { label: 'Overdue',          value: String(overdue),      sub: 'Past expiration date', alert: overdue > 0 },
+        ].map(({ label, value, sub, alert }) => (
+          <div key={label}>
+            <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-widest">{label}</p>
+            <p className={cn('text-xl sm:text-3xl font-bold tabular-nums tracking-tight mt-1', alert ? 'text-amber-600' : 'text-gray-900 dark:text-zinc-50')}>{value}</p>
+            {sub && <p className={cn('text-xs mt-0.5', alert ? 'text-amber-500' : 'text-gray-400 dark:text-zinc-500')}>{sub}</p>}
           </div>
         ))}
       </motion.div>

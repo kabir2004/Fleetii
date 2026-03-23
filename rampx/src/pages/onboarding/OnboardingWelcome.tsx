@@ -29,7 +29,7 @@ export default function OnboardingWelcome() {
         <h1 className="text-3xl font-bold text-zinc-50 mb-2">Welcome to Fleetii</h1>
         <p className="text-zinc-400 mb-10">What type of company are you?</p>
 
-        <div className="grid grid-cols-2 gap-4 mb-8">
+        <div className="grid grid-cols-2 gap-2 sm:gap-4 mb-8">
           {OPTIONS.map(({ type, label, description, icon: Icon }) => (
             <button
               key={type}

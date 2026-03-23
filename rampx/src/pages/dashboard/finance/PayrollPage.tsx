@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion'
-import { Users, Calendar, DollarSign, TrendingUp, Download, ArrowRight } from 'lucide-react'
+import { Download, ArrowRight } from 'lucide-react'
 import { formatCurrency } from '@/lib/formatters'
 import { useUIStore } from '@/stores/uiStore'
+import { cn } from '@/lib/utils'
 
 /* ── inline data ─────────────────────────────────────────────────────────── */
 
@@ -72,45 +73,30 @@ export default function PayrollPage() {
   return (
     <div className="p-4 md:p-6 w-full space-y-5">
 
+      {/* Page header */}
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-zinc-50 tracking-tight">Payroll</h1>
+          <p className="text-sm text-gray-400 dark:text-zinc-500 mt-1">Compensation & pay run management</p>
+        </div>
+      </div>
+
       {/* KPI strip */}
       <motion.div
-        className="grid grid-cols-2 md:grid-cols-4 gap-4"
+        className="flex flex-wrap items-start gap-x-12 gap-y-6 border-b border-gray-100 dark:border-zinc-800 pb-8"
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
       >
         {[
-          {
-            label: 'This Payroll Run',
-            value: formatCurrency(184200),
-            sub: 'Mar 16 – Mar 31, 2024',
-            icon: DollarSign,
-          },
-          {
-            label: 'Next Pay Date',
-            value: 'Apr 5, 2024',
-            sub: 'Bi-monthly schedule',
-            icon: Calendar,
-          },
-          {
-            label: 'Active Employees',
-            value: '47',
-            sub: 'All departments',
-            icon: Users,
-          },
-          {
-            label: 'YTD Payroll',
-            value: formatCurrency(892400),
-            sub: '6 pay runs completed',
-            icon: TrendingUp,
-          },
-        ].map(({ label, value, sub, icon: Icon }) => (
-          <div key={label} className="rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-wide">{label}</p>
-              <div className="h-8 w-8 rounded-lg bg-gray-50 dark:bg-zinc-800 border border-gray-100 dark:border-zinc-700 flex items-center justify-center text-gray-400 dark:text-zinc-500"><Icon className="h-4 w-4" /></div>
-            </div>
-            <p className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-zinc-50 tabular-nums tracking-tight">{value}</p>
-            <p className="text-xs mt-1.5 text-gray-400 dark:text-zinc-500">{sub}</p>
+          { label: 'This Payroll Run',   value: formatCurrency(184200),  sub: 'Mar 16 – Mar 31, 2024',    highlight: true  },
+          { label: 'Next Pay Date',      value: 'Apr 5, 2024',           sub: 'Bi-monthly schedule',       highlight: false },
+          { label: 'Active Employees',   value: '47',                    sub: 'All departments',            highlight: false },
+          { label: 'YTD Payroll',        value: formatCurrency(892400),  sub: '6 pay runs completed',      highlight: true  },
+        ].map(({ label, value, sub, highlight }) => (
+          <div key={label}>
+            <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-widest">{label}</p>
+            <p className={cn('text-3xl font-bold tabular-nums tracking-tight mt-1', highlight ? 'text-[#2D6A4F] dark:text-[#C8F400]' : 'text-gray-900 dark:text-zinc-50')}>{value}</p>
+            {sub && <p className="text-xs mt-0.5 text-gray-400 dark:text-zinc-500">{sub}</p>}
           </div>
         ))}
       </motion.div>

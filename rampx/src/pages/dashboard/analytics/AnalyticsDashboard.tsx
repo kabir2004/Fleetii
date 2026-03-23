@@ -3,8 +3,7 @@ import {
   LineChart, Line, AreaChart, Area, XAxis, YAxis,
   CartesianGrid, Tooltip, ResponsiveContainer,
 } from 'recharts'
-import { TrendingUp, Route, Award, Truck } from 'lucide-react'
-import { formatCurrency } from '@/lib/formatters'
+import { formatCurrency, CURRENT_MONTH_LABEL } from '@/lib/formatters'
 import { MOCK_SPEND_BY_MONTH, MOCK_TOP_LANES } from '@/lib/mockData'
 import { cn } from '@/lib/utils'
 import { useUIStore } from '@/stores/uiStore'
@@ -64,25 +63,30 @@ export default function AnalyticsDashboard() {
   return (
     <div className="p-4 md:p-6 w-full space-y-5">
 
+      {/* Page header */}
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 dark:text-zinc-50 tracking-tight">Analytics</h1>
+          <p className="text-sm text-gray-400 dark:text-zinc-500 mt-1">Margin trends, carrier performance & lane data</p>
+        </div>
+      </div>
+
       {/* KPI strip */}
       <motion.div
-        className="grid grid-cols-2 md:grid-cols-4 gap-4"
+        className="flex flex-wrap items-start gap-x-6 sm:gap-x-12 gap-y-4 sm:gap-y-6 border-b border-gray-100 dark:border-zinc-800 pb-8"
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
       >
         {[
-          { label: 'Gross Margin (MTD)',    value: `${margin}%`,   sub: `${parseFloat(marginDelta) >= 0 ? '+' : ''}${marginDelta}pp vs February`, icon: TrendingUp },
-          { label: 'Avg Revenue / Mile',    value: '$1.74/mi',     sub: '+$0.18 vs last month',                                                   icon: Route      },
-          { label: 'On-Time Delivery',      value: '91.2%',        sub: 'March 2024 average',                                                     icon: Truck      },
-          { label: 'Active Loads (MTD)',     value: String(current.loads), sub: `vs ${previous.loads} last month`,                                 icon: Award      },
-        ].map(({ label, value, sub, icon: Icon }) => (
-          <div key={label} className="rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-wide">{label}</p>
-              <div className="h-8 w-8 rounded-lg bg-gray-50 dark:bg-zinc-800 border border-gray-100 dark:border-zinc-700 flex items-center justify-center text-gray-400 dark:text-zinc-500"><Icon className="h-4 w-4" /></div>
-            </div>
-            <p className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-zinc-50 tabular-nums tracking-tight">{value}</p>
-            <p className="text-[11px] text-gray-400 dark:text-zinc-500 mt-1">{sub}</p>
+          { label: 'Gross Margin (MTD)',    value: `${margin}%`,   sub: `${parseFloat(marginDelta) >= 0 ? '+' : ''}${marginDelta}pp vs February` },
+          { label: 'Avg Revenue / Mile',    value: '$1.74/mi',     sub: '+$0.18 vs last month' },
+          { label: 'On-Time Delivery',      value: '91.2%',        sub: `${CURRENT_MONTH_LABEL} average` },
+          { label: 'Active Loads (MTD)',     value: String(current.loads), sub: `vs ${previous.loads} last month` },
+        ].map(({ label, value, sub }) => (
+          <div key={label}>
+            <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-widest">{label}</p>
+            <p className="text-xl sm:text-3xl font-bold tabular-nums tracking-tight mt-1 text-gray-900 dark:text-zinc-50">{value}</p>
+            {sub && <p className="text-xs mt-0.5 text-gray-400 dark:text-zinc-500">{sub}</p>}
           </div>
         ))}
       </motion.div>
@@ -152,7 +156,7 @@ export default function AnalyticsDashboard() {
         >
           <div className="px-6 py-4 border-b border-gray-100 dark:border-zinc-800">
             <p className="text-sm font-semibold text-gray-800 dark:text-zinc-100">Carrier Performance</p>
-            <p className="text-xs text-gray-400 dark:text-zinc-500 mt-0.5">Ranked by on-time delivery · March 2024</p>
+            <p className="text-xs text-gray-400 dark:text-zinc-500 mt-0.5">Ranked by on-time delivery · {CURRENT_MONTH_LABEL}</p>
           </div>
           <div className="overflow-x-auto"><table className="w-full">
             <thead>
@@ -193,7 +197,7 @@ export default function AnalyticsDashboard() {
         >
           <div className="px-6 py-4 border-b border-gray-100 dark:border-zinc-800">
             <p className="text-sm font-semibold text-gray-800 dark:text-zinc-100">Top Lanes by Volume</p>
-            <p className="text-xs text-gray-400 dark:text-zinc-500 mt-0.5">Avg rate per load · March 2024</p>
+            <p className="text-xs text-gray-400 dark:text-zinc-500 mt-0.5">Avg rate per load · {CURRENT_MONTH_LABEL}</p>
           </div>
           <div className="overflow-x-auto"><table className="w-full">
             <thead>

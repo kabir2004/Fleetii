@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import { Plus, Search, FileText, Clock, AlertTriangle, CheckCircle } from 'lucide-react'
+import { Plus, Search, AlertTriangle } from 'lucide-react'
 import { StatusBadge } from '@/components/shared/StatusBadge'
-import { formatCurrency, formatDate } from '@/lib/formatters'
+import { formatCurrency, formatDate, CURRENT_MONTH_LABEL } from '@/lib/formatters'
 import { MOCK_INVOICES } from '@/lib/mockData'
 import { cn } from '@/lib/utils'
 
@@ -30,27 +30,34 @@ export default function BillingPage() {
   return (
     <div className="p-4 md:p-6 w-full space-y-5">
 
+      {/* Page header */}
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-zinc-50 tracking-tight">Billing</h1>
+          <p className="text-sm text-gray-400 dark:text-zinc-500 mt-1">Customer invoicing & collections</p>
+        </div>
+        <button className="h-9 px-4 rounded-lg bg-gray-900 dark:bg-white text-white dark:text-zinc-900 text-sm font-medium hover:bg-gray-700 dark:hover:bg-gray-100 transition-colors flex items-center gap-2">
+          <Plus className="h-3.5 w-3.5" />
+          Create Invoice
+        </button>
+      </div>
+
       {/* KPI strip */}
       <motion.div
-        className="grid grid-cols-2 md:grid-cols-4 gap-4"
+        className="flex flex-wrap items-start gap-x-12 gap-y-6 border-b border-gray-100 dark:border-zinc-800 pb-8"
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
       >
         {[
-          { label: 'AR Outstanding',  value: formatCurrency(totalAR),   sub: `${receivables.filter(i => i.status !== 'paid').length} open invoices`, icon: FileText,     alert: false },
-          { label: 'Collected MTD',   value: formatCurrency(paidMTD),   sub: `${receivables.filter(i => i.status === 'paid').length} invoices paid`,  icon: CheckCircle,  alert: false },
-          { label: 'Overdue',         value: formatCurrency(overdueAmt), sub: `${overdueCount} invoice${overdueCount !== 1 ? 's' : ''} past due`,      icon: AlertTriangle, alert: overdueCount > 0 },
-          { label: 'Avg Days to Pay', value: '18d',                     sub: 'March 2024 average',                                                    icon: Clock,        alert: false },
-        ].map(({ label, value, sub, icon: Icon, alert }) => (
-          <div key={label} className="rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-wide">{label}</p>
-              <div className="h-8 w-8 rounded-lg bg-gray-50 dark:bg-zinc-800 border border-gray-100 dark:border-zinc-700 flex items-center justify-center text-gray-400 dark:text-zinc-500">
-                <Icon className="h-4 w-4" />
-              </div>
-            </div>
-            <p className={cn('text-2xl sm:text-3xl font-bold tabular-nums tracking-tight', alert ? 'text-amber-600' : 'text-gray-900 dark:text-zinc-50')}>{value}</p>
-            <p className={cn('text-xs mt-1.5', alert ? 'text-amber-500' : 'text-gray-400 dark:text-zinc-500')}>{sub}</p>
+          { label: 'AR Outstanding',  value: formatCurrency(totalAR),   sub: `${receivables.filter(i => i.status !== 'paid').length} open invoices`, alert: false },
+          { label: 'Collected MTD',   value: formatCurrency(paidMTD),   sub: `${receivables.filter(i => i.status === 'paid').length} invoices paid`,  alert: false },
+          { label: 'Overdue',         value: formatCurrency(overdueAmt), sub: `${overdueCount} invoice${overdueCount !== 1 ? 's' : ''} past due`,      alert: overdueCount > 0 },
+          { label: 'Avg Days to Pay', value: '18d',                     sub: `${CURRENT_MONTH_LABEL} average`,                                        alert: false },
+        ].map(({ label, value, sub, alert }) => (
+          <div key={label}>
+            <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-widest">{label}</p>
+            <p className={cn('text-3xl font-bold tabular-nums tracking-tight mt-1', alert ? 'text-amber-600' : 'text-gray-900 dark:text-zinc-50')}>{value}</p>
+            {sub && <p className={cn('text-xs mt-0.5', alert ? 'text-amber-500' : 'text-gray-400 dark:text-zinc-500')}>{sub}</p>}
           </div>
         ))}
       </motion.div>
@@ -86,10 +93,6 @@ export default function BillingPage() {
             </button>
           ))}
         </div>
-        <button className="ml-auto h-9 px-4 rounded-lg bg-gray-900 dark:bg-white text-white dark:text-zinc-900 text-sm font-medium hover:bg-gray-700 dark:hover:bg-gray-100 transition-colors flex items-center gap-2">
-          <Plus className="h-3.5 w-3.5" />
-          Create Invoice
-        </button>
       </motion.div>
 
       {/* Table */}

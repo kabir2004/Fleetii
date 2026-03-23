@@ -55,48 +55,48 @@ const TESTIMONIALS = [
 // Mini UI components for bento cards
 function AuditMiniUI() {
   return (
-    <div className="p-5 font-mono text-[11px]">
+    <div className="p-5">
       <div className="flex items-center justify-between mb-4">
-        <span className="font-sans text-xs font-semibold text-gray-700">INV-2024-0391 · FastRoute Carrier</span>
-        <span className="font-sans text-[10px] font-semibold text-red-600 bg-red-50 border border-red-100 rounded-full px-2.5 py-0.5">2 issues</span>
+        <span className="text-sm font-semibold text-gray-900">INV-2024-0391 · FastRoute Carrier</span>
+        <span className="text-xs font-semibold text-red-600 bg-red-50 border border-red-100 rounded-full px-2.5 py-0.5">2 issues</span>
       </div>
       <div className="space-y-2">
         <div className="rounded-lg bg-red-50 border border-red-100 p-3">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <div className="font-sans text-[10px] font-medium text-gray-500 mb-0.5">Line haul rate</div>
-              <div className="flex items-center gap-1.5">
+              <div className="text-xs font-medium text-gray-700 mb-0.5">Line haul rate</div>
+              <div className="flex items-center gap-1.5 text-sm">
                 <span className="text-green-700 font-semibold">$5.19/mi</span>
                 <span className="text-gray-300">→</span>
                 <span className="text-red-600 font-semibold">$5.90/mi</span>
               </div>
             </div>
             <div className="text-right shrink-0">
-              <div className="font-sans text-[10px] text-gray-400 mb-0.5">Recovery</div>
-              <div className="text-green-700 font-bold">+$655.74</div>
+              <div className="text-xs text-gray-700 mb-0.5">Recovery</div>
+              <div className="text-green-700 font-bold text-sm">+$655.74</div>
             </div>
           </div>
         </div>
         <div className="rounded-lg bg-red-50 border border-red-100 p-3">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <div className="font-sans text-[10px] font-medium text-gray-500 mb-0.5">Detention fee</div>
-              <div className="flex items-center gap-1.5">
+              <div className="text-xs font-medium text-gray-700 mb-0.5">Detention fee</div>
+              <div className="flex items-center gap-1.5 text-sm">
                 <span className="text-green-700 font-semibold">Not approved</span>
                 <span className="text-gray-300">→</span>
                 <span className="text-red-600 font-semibold">$230.00</span>
               </div>
             </div>
             <div className="text-right shrink-0">
-              <div className="font-sans text-[10px] text-gray-400 mb-0.5">Recovery</div>
-              <div className="text-green-700 font-bold">+$230.00</div>
+              <div className="text-xs text-gray-700 mb-0.5">Recovery</div>
+              <div className="text-green-700 font-bold text-sm">+$230.00</div>
             </div>
           </div>
         </div>
       </div>
       <div className="mt-3 flex items-center justify-between px-1">
-        <span className="font-sans text-[10px] font-semibold text-gray-500">Total identified</span>
-        <span className="text-green-700 font-bold text-sm">$885.74</span>
+        <span className="text-xs font-semibold text-gray-800">Total identified</span>
+        <span className="text-green-700 font-bold text-base">$885.74</span>
       </div>
     </div>
   )
@@ -107,10 +107,10 @@ function SpendMiniUI() {
   return (
     <div className="p-5">
       <div className="flex items-baseline justify-between mb-1">
-        <span className="text-xs font-semibold text-gray-700">Freight spend</span>
-        <span className="font-mono text-xs font-bold text-gray-900">$934K <span className="text-green-700 text-[10px]">↓ 3.2%</span></span>
+        <span className="text-sm font-semibold text-gray-900">Freight spend</span>
+        <span className="font-mono text-sm font-bold text-gray-900">$934K <span className="text-green-700 text-xs">↓ 3.2%</span></span>
       </div>
-      <div className="text-[10px] text-gray-400 mb-4">vs last month</div>
+      <div className="text-xs text-gray-600 mb-4">vs last month</div>
       <div className="flex items-end gap-1.5 h-24">
         {bars.map((h, i) => (
           <div key={i} className="flex-1 flex flex-col items-center gap-1">
@@ -123,7 +123,7 @@ function SpendMiniUI() {
       </div>
       <div className="flex justify-between mt-1.5">
         {['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'].map(m => (
-          <span key={m} className="text-[9px] text-gray-400 flex-1 text-center">{m}</span>
+          <span key={m} className="text-[10px] text-gray-600 flex-1 text-center">{m}</span>
         ))}
       </div>
     </div>
@@ -133,7 +133,7 @@ function SpendMiniUI() {
 function PaymentsMiniUI() {
   return (
     <div className="p-5 space-y-2">
-      <div className="text-xs font-semibold text-gray-700 mb-3">Pending approvals</div>
+      <div className="text-sm font-semibold text-gray-900 mb-3">Pending approvals</div>
       {[
         { carrier: 'FastRoute Carrier', amount: '$4,280', status: 'Approved', color: 'text-green-700 bg-green-50 border-green-100' },
         { carrier: 'Apex Logistics', amount: '$6,150', status: 'Pending', color: 'text-amber-700 bg-amber-50 border-amber-100' },
@@ -141,10 +141,10 @@ function PaymentsMiniUI() {
       ].map((p, i) => (
         <div key={i} className="flex items-center justify-between rounded-lg border border-gray-100 bg-gray-50 px-3 py-2">
           <div>
-            <div className="text-[11px] font-semibold text-gray-800">{p.carrier}</div>
-            <div className="font-mono text-[10px] text-gray-500">{p.amount}</div>
+            <div className="text-sm font-semibold text-gray-900">{p.carrier}</div>
+            <div className="font-mono text-xs text-gray-700">{p.amount}</div>
           </div>
-          <span className={`text-[10px] font-semibold border rounded-full px-2 py-0.5 ${p.color}`}>{p.status}</span>
+          <span className={`text-xs font-semibold border rounded-full px-2 py-0.5 ${p.color}`}>{p.status}</span>
         </div>
       ))}
     </div>
@@ -154,15 +154,15 @@ function PaymentsMiniUI() {
 function ComplianceMiniUI() {
   return (
     <div className="p-5 space-y-2">
-      <div className="text-xs font-semibold text-gray-700 mb-3">Upcoming renewals</div>
+      <div className="text-sm font-semibold text-gray-900 mb-3">Upcoming renewals</div>
       {[
         { doc: 'CDL · D. Martinez', days: '12 days', color: 'text-red-600 bg-red-50 border-red-100' },
         { doc: 'Vehicle Reg. #T-042', days: '28 days', color: 'text-amber-600 bg-amber-50 border-amber-100' },
         { doc: 'DOT Insurance', days: '67 days', color: 'text-green-700 bg-green-50 border-green-100' },
       ].map((c, i) => (
         <div key={i} className="flex items-center justify-between rounded-lg border border-gray-100 bg-gray-50 px-3 py-2">
-          <div className="text-[11px] font-semibold text-gray-700">{c.doc}</div>
-          <span className={`text-[10px] font-semibold border rounded-full px-2 py-0.5 ${c.color}`}>{c.days}</span>
+          <div className="text-sm font-semibold text-gray-900">{c.doc}</div>
+          <span className={`text-xs font-semibold border rounded-full px-2 py-0.5 ${c.color}`}>{c.days}</span>
         </div>
       ))}
     </div>
@@ -214,17 +214,17 @@ export default function LandingPage() {
       {/* ── Hero ── */}
       <section className="max-w-6xl mx-auto px-6 pt-20 pb-16 text-center">
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-          <div className="inline-flex items-center gap-2 rounded-full border border-gray-200 px-4 py-1.5 text-sm text-gray-500 font-medium mb-10 tracking-tight">
+          <div className="inline-flex items-center gap-2 rounded-full border border-gray-200 px-4 py-1.5 text-sm text-gray-700 font-medium mb-10 tracking-tight">
             <span className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
             Now in beta. 500+ fleets enrolled.
           </div>
 
-          <h1 className="text-[68px] md:text-[88px] font-bold text-gray-950 leading-[0.95] tracking-[-0.04em] mb-7">
+          <h1 className="text-[40px] sm:text-[56px] md:text-[68px] lg:text-[88px] font-bold text-gray-950 leading-[0.95] tracking-[-0.04em] mb-7">
             Freight finance<br />
             <span className="text-green-700">for trucking.</span>
           </h1>
 
-          <p className="text-lg md:text-xl text-gray-500 max-w-xl mx-auto mb-10 leading-relaxed">
+          <p className="text-lg md:text-xl text-gray-700 max-w-xl mx-auto mb-10 leading-relaxed">
             Audit freight invoices, pay carriers, and track spend. Built for trucking companies of every size.
           </p>
 
@@ -234,7 +234,7 @@ export default function LandingPage() {
                 Start for free <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
-            <Button asChild variant="outline" className="h-11 px-5 rounded-xl border-gray-200 text-gray-700 hover:bg-gray-50 hover:text-gray-700 font-semibold text-sm">
+            <Button asChild variant="outline" className="h-11 px-5 rounded-xl border-gray-200 text-gray-800 hover:bg-gray-50 hover:text-gray-800 font-semibold text-sm">
               <Link to="/login">Book a demo</Link>
             </Button>
           </div>
@@ -242,26 +242,26 @@ export default function LandingPage() {
 
         {/* Platform Bento */}
         <motion.div
-          className="grid grid-cols-5 grid-rows-2 gap-3 mt-16"
-          style={{ gridAutoRows: '200px' }}
+          className="grid grid-cols-1 md:grid-cols-5 md:grid-rows-2 gap-3 mt-16"
+          style={{ gridAutoRows: 'auto' }}
           initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.65, delay: 0.15 }}
         >
           {/* Tile A — Freight Audit (large, 2×2) */}
-          <div className="col-span-2 row-span-2 rounded-2xl border border-gray-200 bg-white p-5 flex flex-col text-left shadow-[0_2px_8px_0_rgba(0,0,0,0.04)] overflow-hidden">
+          <div className="md:col-span-2 md:row-span-2 rounded-2xl border border-gray-200 bg-white p-5 flex flex-col text-left shadow-[0_2px_8px_0_rgba(0,0,0,0.04)] overflow-hidden">
             <div className="flex items-center justify-between mb-4">
-              <span className="text-[11px] font-bold text-gray-900 uppercase tracking-widest">Freight Audit</span>
-              <span className="text-[10px] font-semibold text-red-600 bg-red-50 border border-red-100 rounded-full px-2.5 py-0.5">2 flagged</span>
+              <span className="text-sm font-bold text-gray-900 tracking-tight">Freight Audit</span>
+              <span className="text-xs font-semibold text-red-600 bg-red-50 border border-red-100 rounded-full px-2.5 py-0.5">2 flagged</span>
             </div>
-            <div className="text-[11px] text-gray-400 font-medium mb-3">INV-2024-0391 · FastRoute Carrier</div>
+            <div className="text-xs text-gray-700 font-medium mb-3">INV-2024-0391 · FastRoute Carrier</div>
             <div className="space-y-2 flex-1">
               <div className="rounded-xl border border-red-100 bg-red-50/60 p-3">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-[11px] font-semibold text-gray-700">Line haul rate</span>
-                  <span className="font-mono text-[10px] font-bold text-green-700">+$655.74</span>
+                  <span className="text-xs font-semibold text-gray-800">Line haul rate</span>
+                  <span className="font-mono text-xs font-bold text-green-700">+$655.74</span>
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-mono">
+                <div className="flex items-center gap-2 text-xs font-mono">
                   <span className="text-green-700 font-semibold">$5.19/mi</span>
                   <span className="text-gray-300">→</span>
                   <span className="text-red-600 font-semibold">$5.90/mi</span>
@@ -269,10 +269,10 @@ export default function LandingPage() {
               </div>
               <div className="rounded-xl border border-red-100 bg-red-50/60 p-3">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-[11px] font-semibold text-gray-700">Detention fee</span>
-                  <span className="font-mono text-[10px] font-bold text-green-700">+$230.00</span>
+                  <span className="text-xs font-semibold text-gray-800">Detention fee</span>
+                  <span className="font-mono text-xs font-bold text-green-700">+$230.00</span>
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-mono">
+                <div className="flex items-center gap-2 text-xs font-mono">
                   <span className="text-green-700 font-semibold">Not approved</span>
                   <span className="text-gray-300">→</span>
                   <span className="text-red-600 font-semibold">$230.00</span>
@@ -280,58 +280,58 @@ export default function LandingPage() {
               </div>
               <div className="rounded-xl border border-gray-100 bg-gray-50 p-3">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-[11px] font-semibold text-gray-700">Fuel surcharge</span>
-                  <span className="text-[10px] font-semibold text-green-700">✓ Correct</span>
+                  <span className="text-xs font-semibold text-gray-800">Fuel surcharge</span>
+                  <span className="text-xs font-semibold text-green-700">✓ Correct</span>
                 </div>
-                <div className="flex items-center gap-2 text-[10px] font-mono">
-                  <span className="text-gray-500">$0.48/mi</span>
+                <div className="flex items-center gap-2 text-xs font-mono">
+                  <span className="text-gray-700">$0.48/mi</span>
                   <span className="text-gray-300">→</span>
-                  <span className="text-gray-600">$0.48/mi</span>
+                  <span className="text-gray-700">$0.48/mi</span>
                 </div>
               </div>
             </div>
             <div className="mt-3 flex items-center justify-between rounded-xl bg-green-50 border border-green-100 px-3 py-2.5">
-              <span className="text-[11px] font-semibold text-gray-700">Total recovery</span>
+              <span className="text-xs font-semibold text-gray-800">Total recovery</span>
               <span className="font-mono text-sm font-bold text-green-700">$885.74</span>
             </div>
           </div>
 
           {/* Tile B — Savings KPI */}
-          <div className="col-span-1 rounded-2xl border border-gray-200 bg-white p-5 flex flex-col text-left shadow-[0_2px_8px_0_rgba(0,0,0,0.04)]">
-            <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-3">Savings found</span>
+          <div className="md:col-span-1 rounded-2xl border border-gray-200 bg-white p-5 flex flex-col text-left shadow-[0_2px_8px_0_rgba(0,0,0,0.04)]">
+            <span className="text-sm font-bold text-gray-900 tracking-tight mb-3">Savings found</span>
             <div className="font-mono text-3xl font-bold text-gray-950 tracking-tight mt-auto">$22.1K</div>
             <div className="flex items-center gap-1 mt-1.5">
-              <span className="text-[11px] font-semibold text-green-700">↑ 34%</span>
-              <span className="text-[11px] text-gray-400">vs last month</span>
+              <span className="text-xs font-semibold text-green-700">↑ 34%</span>
+              <span className="text-xs text-gray-700">vs last month</span>
             </div>
           </div>
 
           {/* Tile C — Spend Chart */}
-          <div className="col-span-2 rounded-2xl border border-gray-200 bg-white p-5 flex flex-col text-left shadow-[0_2px_8px_0_rgba(0,0,0,0.04)]">
+          <div className="md:col-span-2 rounded-2xl border border-gray-200 bg-white p-5 flex flex-col text-left shadow-[0_2px_8px_0_rgba(0,0,0,0.04)]">
             <div className="flex items-center justify-between mb-1">
-              <span className="text-[11px] font-bold text-gray-900 uppercase tracking-widest">Freight Spend</span>
-              <span className="font-mono text-xs font-bold text-gray-900">$934K</span>
+              <span className="text-sm font-bold text-gray-900 tracking-tight">Freight Spend</span>
+              <span className="font-mono text-sm font-bold text-gray-900">$934K</span>
             </div>
-            <span className="text-[10px] text-gray-400 mb-4">Last 8 months</span>
+            <span className="text-xs text-gray-700 mb-4">Last 8 months</span>
             <div className="flex items-end gap-1.5 flex-1">
               {[40, 55, 48, 70, 60, 82, 73, 93].map((h, i) => (
                 <div
                   key={i}
-                  className={`flex-1 rounded-t-sm ${i === 7 ? 'bg-green-600' : 'bg-gray-100'}`}
+                  className={`flex-1 rounded-t-sm ${i === 7 ? 'bg-green-600' : 'bg-gray-200'}`}
                   style={{ height: `${h}%` }}
                 />
               ))}
             </div>
             <div className="flex justify-between mt-2">
               {['F', 'M', 'A', 'M', 'J', 'J', 'A', 'S'].map((m, i) => (
-                <span key={i} className="flex-1 text-center text-[9px] text-gray-300 font-medium">{m}</span>
+                <span key={i} className="flex-1 text-center text-[10px] text-gray-600 font-medium">{m}</span>
               ))}
             </div>
           </div>
 
           {/* Tile D — Active Loads */}
-          <div className="col-span-1 rounded-2xl border border-gray-200 bg-white p-5 flex flex-col text-left shadow-[0_2px_8px_0_rgba(0,0,0,0.04)]">
-            <span className="text-[11px] font-bold text-gray-400 uppercase tracking-widest mb-3">Active Loads</span>
+          <div className="md:col-span-1 rounded-2xl border border-gray-200 bg-white p-5 flex flex-col text-left shadow-[0_2px_8px_0_rgba(0,0,0,0.04)]">
+            <span className="text-sm font-bold text-gray-900 tracking-tight mb-3">Active Loads</span>
             <div className="font-mono text-3xl font-bold text-gray-950 tracking-tight mt-auto mb-3">53</div>
             <div className="space-y-1.5">
               {[
@@ -341,16 +341,16 @@ export default function LandingPage() {
               ].map(s => (
                 <div key={s.label} className="flex items-center gap-2">
                   <div className={`h-1.5 w-1.5 rounded-full shrink-0 ${s.color}`} />
-                  <span className="text-[10px] text-gray-500 flex-1">{s.label}</span>
-                  <span className="font-mono text-[10px] font-bold text-gray-700">{s.n}</span>
+                  <span className="text-xs text-gray-700 flex-1">{s.label}</span>
+                  <span className="font-mono text-xs font-bold text-gray-900">{s.n}</span>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Tile E — Payments Queue */}
-          <div className="col-span-2 rounded-2xl border border-gray-200 bg-white p-5 flex flex-col text-left shadow-[0_2px_8px_0_rgba(0,0,0,0.04)]">
-            <span className="text-[11px] font-bold text-gray-900 uppercase tracking-widest mb-4">Carrier Payments</span>
+          <div className="md:col-span-2 rounded-2xl border border-gray-200 bg-white p-5 flex flex-col text-left shadow-[0_2px_8px_0_rgba(0,0,0,0.04)]">
+            <span className="text-sm font-bold text-gray-900 tracking-tight mb-4">Carrier Payments</span>
             <div className="space-y-2 flex-1">
               {[
                 { carrier: 'FastRoute Carrier', amount: '$4,280', status: 'Approved', sc: 'text-green-700 bg-green-50 border-green-100' },
@@ -359,10 +359,10 @@ export default function LandingPage() {
               ].map(p => (
                 <div key={p.carrier} className="flex items-center justify-between rounded-xl border border-gray-100 bg-gray-50 px-3 py-2.5">
                   <div>
-                    <div className="text-[11px] font-semibold text-gray-800">{p.carrier}</div>
-                    <div className="font-mono text-[10px] text-gray-400 mt-0.5">{p.amount}</div>
+                    <div className="text-sm font-semibold text-gray-900">{p.carrier}</div>
+                    <div className="font-mono text-xs text-gray-700 mt-0.5">{p.amount}</div>
                   </div>
-                  <span className={`text-[10px] font-semibold border rounded-full px-2.5 py-0.5 ${p.sc}`}>{p.status}</span>
+                  <span className={`text-xs font-semibold border rounded-full px-2.5 py-0.5 ${p.sc}`}>{p.status}</span>
                 </div>
               ))}
             </div>
@@ -374,9 +374,9 @@ export default function LandingPage() {
       <section className="py-10">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-4">
-            <span className="text-xs font-semibold text-gray-300 uppercase tracking-widest mr-2">Trusted by</span>
+            <span className="text-sm font-semibold text-gray-700 tracking-tight mr-2">Trusted by</span>
             {LOGOS.map(name => (
-              <span key={name} className="text-sm font-bold text-gray-300 tracking-wide">{name}</span>
+              <span key={name} className="text-sm font-bold text-gray-600 tracking-tight">{name}</span>
             ))}
           </div>
         </div>
@@ -391,13 +391,13 @@ export default function LandingPage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {BENTO.map((card, i) => {
               const isFirst = i === 0
               return (
                 <motion.div
                   key={card.label}
-                  className={`${card.span} rounded-2xl border border-gray-200 bg-white overflow-hidden flex flex-col`}
+                  className="rounded-2xl border border-gray-200 bg-white overflow-hidden flex flex-col"
                   initial={{ opacity: 0, y: 12 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -411,16 +411,16 @@ export default function LandingPage() {
                   ) : card.icon ? (
                     <div className="border-b border-gray-100 bg-gray-50/80 min-h-[160px] flex items-center justify-center">
                       <div className="h-12 w-12 rounded-2xl bg-white border border-gray-200 flex items-center justify-center shadow-sm">
-                        <card.icon className="h-6 w-6 text-gray-400" />
+                        <card.icon className="h-6 w-6 text-gray-700" />
                       </div>
                     </div>
                   ) : null}
 
                   {/* Text */}
                   <div className="p-5 flex-1">
-                    <div className="text-[10px] font-bold text-green-700 uppercase tracking-widest mb-2">{card.label}</div>
+                    <div className="text-xs font-bold text-green-700 tracking-tight mb-2">{card.label}</div>
                     <div className="text-sm font-semibold text-gray-900 mb-1.5 leading-snug">{card.title}</div>
-                    <p className="text-xs text-gray-500 leading-relaxed">{card.description}</p>
+                    <p className="text-sm text-gray-700 leading-relaxed">{card.description}</p>
                   </div>
                 </motion.div>
               )
@@ -441,7 +441,7 @@ export default function LandingPage() {
             <h2 className="text-4xl font-bold text-gray-950 tracking-tight mb-5 leading-tight">
               Automated invoice auditing.
             </h2>
-            <p className="text-gray-500 leading-relaxed mb-8 text-[15px]">
+            <p className="text-gray-700 leading-relaxed mb-8 text-[15px]">
               Auditing hundreds of invoices a month manually is not practical. Fleetii does it automatically, comparing every line against your contracted rates and flagging discrepancies before you approve payment.
             </p>
             <div className="space-y-3">
@@ -451,7 +451,7 @@ export default function LandingPage() {
                 'Duplicate invoice detection',
                 'Wrong weight or mileage calculations',
               ].map(item => (
-                <div key={item} className="flex items-center gap-3 text-sm text-gray-700 font-medium">
+                <div key={item} className="flex items-center gap-3 text-sm text-gray-800 font-medium">
                   <CheckCircle className="h-4 w-4 text-green-600 shrink-0" />
                   {item}
                 </div>
@@ -472,14 +472,14 @@ export default function LandingPage() {
           >
             <div className="border-b border-gray-100 bg-gray-50 px-5 py-4 flex items-center justify-between">
               <div>
-                <div className="text-xs font-bold text-gray-900">INV-2024-0391</div>
-                <div className="text-[11px] text-gray-400 mt-0.5">FastRoute Carrier · Submitted Sep 12</div>
+                <div className="text-sm font-bold text-gray-900">INV-2024-0391</div>
+                <div className="text-xs text-gray-700 mt-0.5">FastRoute Carrier · Submitted Sep 12</div>
               </div>
               <span className="text-xs font-semibold text-red-600 bg-red-50 border border-red-100 rounded-full px-3 py-1">2 issues · $885 flagged</span>
             </div>
 
             <div className="p-5 space-y-3">
-              <div className="grid grid-cols-4 gap-3 text-[11px] font-semibold text-gray-400 uppercase tracking-wider px-1 mb-1">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs font-semibold text-gray-700 tracking-tight px-1 mb-1">
                 <span className="col-span-2">Line item</span>
                 <span className="text-right">Contracted</span>
                 <span className="text-right">Billed</span>
@@ -492,31 +492,31 @@ export default function LandingPage() {
               ].map((row, i) => (
                 <div
                   key={i}
-                  className={`grid grid-cols-4 gap-3 items-center rounded-xl p-3 text-xs ${
+                  className={`grid grid-cols-2 md:grid-cols-4 gap-3 items-center rounded-xl p-3 text-xs ${
                     row.flag ? 'bg-red-50 border border-red-100' : 'bg-gray-50 border border-gray-100'
                   }`}
                 >
-                  <span className="col-span-2 font-medium text-gray-800">{row.item}</span>
+                  <span className="col-span-2 font-medium text-gray-900">{row.item}</span>
                   <span className="font-mono text-right text-green-700 font-semibold">{row.contracted}</span>
                   <div className="text-right">
-                    <span className={`font-mono font-semibold ${row.flag ? 'text-red-600' : 'text-gray-600'}`}>{row.billed}</span>
+                    <span className={`font-mono font-semibold ${row.flag ? 'text-red-600' : 'text-gray-800'}`}>{row.billed}</span>
                     {row.flag && (
-                      <div className="text-[10px] text-green-700 font-bold mt-0.5">+{row.recovery}</div>
+                      <div className="text-xs text-green-700 font-bold mt-0.5">+{row.recovery}</div>
                     )}
                   </div>
                 </div>
               ))}
 
               <div className="flex items-center justify-between rounded-xl border border-green-200 bg-green-50 px-4 py-3 mt-2">
-                <span className="text-sm font-semibold text-gray-800">Total recovery identified</span>
+                <span className="text-sm font-semibold text-gray-900">Total recovery identified</span>
                 <span className="font-mono text-lg font-bold text-green-700">$885.74</span>
               </div>
 
               <div className="flex gap-2 pt-1">
-                <button className="flex-1 h-9 rounded-xl bg-gray-950 text-white text-xs font-semibold hover:bg-gray-800 transition-colors">
+                <button className="flex-1 h-9 rounded-xl bg-gray-950 text-white text-sm font-semibold hover:bg-gray-800 transition-colors">
                   Dispute charges
                 </button>
-                <button className="flex-1 h-9 rounded-xl border border-gray-200 text-gray-600 text-xs font-semibold hover:bg-gray-50 transition-colors">
+                <button className="flex-1 h-9 rounded-xl border border-gray-200 text-gray-800 text-sm font-semibold hover:bg-gray-50 transition-colors">
                   Approve adjusted
                 </button>
               </div>
@@ -536,7 +536,7 @@ export default function LandingPage() {
             ].map((s, i) => (
               <motion.div
                 key={i}
-                className="px-10 py-10 first:pl-0 last:pr-0"
+                className="px-4 sm:px-8 md:px-10 py-10 first:pl-0 last:pr-0"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
@@ -545,8 +545,8 @@ export default function LandingPage() {
                 <div className="font-mono text-5xl font-bold text-gray-950 tracking-tight mb-2">
                   <AnimatedCounter target={s.target} prefix={s.prefix} suffix={s.suffix} />
                 </div>
-                <div className="text-base font-semibold text-gray-700 mb-1">{s.label}</div>
-                <div className="text-sm text-gray-400">{s.sub}</div>
+                <div className="text-base font-semibold text-gray-900 mb-1">{s.label}</div>
+                <div className="text-sm text-gray-700">{s.sub}</div>
               </motion.div>
             ))}
           </div>
@@ -561,7 +561,7 @@ export default function LandingPage() {
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {TESTIMONIALS.map((t, i) => (
             <motion.div
               key={i}
@@ -571,15 +571,15 @@ export default function LandingPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.07 }}
             >
-              <p className="text-gray-700 leading-relaxed flex-1 mb-8 text-[15px]">
+              <p className="text-gray-800 leading-relaxed flex-1 mb-8 text-[15px]">
                 "{t.quote}"
               </p>
               <div className="border-t border-gray-100 pt-5">
                 <div className="text-sm font-bold text-gray-900">{t.author}</div>
-                <div className="text-xs text-gray-500 mt-0.5">{t.role}, {t.company}</div>
+                <div className="text-xs text-gray-700 mt-0.5">{t.role}, {t.company}</div>
                 <div className="inline-flex items-center gap-1 mt-3 rounded-full bg-gray-50 border border-gray-200 px-2.5 py-1">
-                  <Truck className="h-3 w-3 text-gray-400" />
-                  <span className="text-[10px] font-semibold text-gray-500">{t.trucks}</span>
+                  <Truck className="h-3 w-3 text-gray-700" />
+                  <span className="text-xs font-semibold text-gray-700">{t.trucks}</span>
                 </div>
               </div>
             </motion.div>
@@ -595,7 +595,7 @@ export default function LandingPage() {
               <h2 className="text-4xl md:text-5xl font-bold text-gray-950 tracking-tight leading-[1.05] max-w-lg">
                 Get started with Fleetii.
               </h2>
-              <p className="text-gray-500 mt-4 text-[15px] max-w-md leading-relaxed">
+              <p className="text-gray-700 mt-4 text-[15px] max-w-md leading-relaxed">
                 Connect your carrier invoices and get a full audit report within 24 hours. No credit card required.
               </p>
             </div>
@@ -605,7 +605,7 @@ export default function LandingPage() {
                   Start for free <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" className="h-11 px-6 rounded-xl border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-gray-600 font-semibold text-sm">
+              <Button asChild variant="outline" className="h-11 px-6 rounded-xl border-gray-200 text-gray-800 hover:bg-gray-50 hover:text-gray-800 font-semibold text-sm">
                 <Link to="/login">Book a demo</Link>
               </Button>
             </div>

@@ -67,3 +67,9 @@ export function formatRatePerMile(rate: number | undefined | null): string {
 export function getInitials(firstName: string, lastName: string): string {
   return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase()
 }
+
+// e.g. "March 23, 2026"
+export const CURRENT_MONTH_LABEL = format(new Date(), 'MMMM d, yyyy')
+
+// e.g. "Mar 23, 2026" (short)
+export const CURRENT_MONTH_SHORT = format(new Date(), 'MMM d, yyyy')

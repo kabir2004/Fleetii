@@ -3,9 +3,9 @@ import {
   AreaChart, Area, XAxis, YAxis,
   CartesianGrid, Tooltip, ResponsiveContainer,
 } from 'recharts'
-import { Wallet, TrendingUp, TrendingDown, ArrowUpRight } from 'lucide-react'
-import { formatCurrency } from '@/lib/formatters'
+import { formatCurrency, CURRENT_MONTH_LABEL } from '@/lib/formatters'
 import { useUIStore } from '@/stores/uiStore'
+import { cn } from '@/lib/utils'
 
 /* ── inline data ─────────────────────────────────────────────────────────── */
 
@@ -114,53 +114,30 @@ export default function CashFlowPage() {
   return (
     <div className="p-4 md:p-6 w-full space-y-5">
 
+      {/* Page header */}
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-zinc-50 tracking-tight">Cash Flow</h1>
+          <p className="text-sm text-gray-400 dark:text-zinc-500 mt-1">Liquidity & financial position</p>
+        </div>
+      </div>
+
       {/* KPI strip */}
       <motion.div
-        className="grid grid-cols-2 md:grid-cols-4 gap-4"
+        className="flex flex-wrap items-start gap-x-12 gap-y-6 border-b border-gray-100 dark:border-zinc-800 pb-8"
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
       >
         {[
-          {
-            label: 'Cash Balance',
-            value: formatCurrency(1284600),
-            sub: 'Current treasury position',
-            icon: Wallet,
-            highlight: true,
-          },
-          {
-            label: 'Monthly Inflow',
-            value: formatCurrency(1247800),
-            sub: 'March 2024',
-            icon: TrendingUp,
-            highlight: false,
-          },
-          {
-            label: 'Monthly Outflow',
-            value: formatCurrency(934000),
-            sub: 'March 2024',
-            icon: TrendingDown,
-            highlight: false,
-          },
-          {
-            label: 'Net Cash Flow',
-            value: '+$313,800',
-            sub: 'March 2024',
-            icon: ArrowUpRight,
-            highlight: true,
-          },
-        ].map(({ label, value, sub, icon: Icon, highlight }) => (
-          <div key={label} className="rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-wide">{label}</p>
-              <div className="h-8 w-8 rounded-lg bg-gray-50 dark:bg-zinc-800 border border-gray-100 dark:border-zinc-700 flex items-center justify-center text-gray-400 dark:text-zinc-500"><Icon className="h-4 w-4" /></div>
-            </div>
-            {highlight ? (
-              <p className="text-lg font-bold tabular-nums" style={{ color: green }}>{value}</p>
-            ) : (
-              <p className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-zinc-50 tabular-nums tracking-tight">{value}</p>
-            )}
-            <p className="text-xs mt-1.5 text-gray-400 dark:text-zinc-500">{sub}</p>
+          { label: 'Cash Balance',    value: formatCurrency(1284600), sub: 'Current treasury position', highlight: true  },
+          { label: 'Monthly Inflow',  value: formatCurrency(1247800), sub: CURRENT_MONTH_LABEL, highlight: false },
+          { label: 'Monthly Outflow', value: formatCurrency(934000),  sub: CURRENT_MONTH_LABEL, highlight: false },
+          { label: 'Net Cash Flow',   value: '+$313,800',             sub: CURRENT_MONTH_LABEL, highlight: true  },
+        ].map(({ label, value, sub, highlight }) => (
+          <div key={label}>
+            <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-widest">{label}</p>
+            <p className={cn('text-3xl font-bold tabular-nums tracking-tight mt-1', highlight ? 'text-[#2D6A4F] dark:text-[#C8F400]' : 'text-gray-900 dark:text-zinc-50')}>{value}</p>
+            {sub && <p className="text-xs mt-0.5 text-gray-400 dark:text-zinc-500">{sub}</p>}
           </div>
         ))}
       </motion.div>
@@ -247,7 +224,7 @@ export default function CashFlowPage() {
           transition={{ delay: 0.08 }}
         >
           <p className="text-sm font-semibold text-gray-900 dark:text-zinc-50 mb-1">Inflows by Source</p>
-          <p className="text-xs text-gray-400 dark:text-zinc-500 mb-5">March 2024 · {formatCurrency(1247800)} total</p>
+          <p className="text-xs text-gray-400 dark:text-zinc-500 mb-5">{CURRENT_MONTH_LABEL} · {formatCurrency(1247800)} total</p>
           <BreakdownBars items={INFLOWS} green={green} />
           <div className="mt-5 pt-4 border-t border-gray-100 dark:border-zinc-800 flex items-center justify-between">
             <span className="text-xs text-gray-400 dark:text-zinc-500">Total inflow</span>
@@ -263,7 +240,7 @@ export default function CashFlowPage() {
           transition={{ delay: 0.1 }}
         >
           <p className="text-sm font-semibold text-gray-900 dark:text-zinc-50 mb-1">Outflows by Category</p>
-          <p className="text-xs text-gray-400 dark:text-zinc-500 mb-5">March 2024 · {formatCurrency(934000)} total</p>
+          <p className="text-xs text-gray-400 dark:text-zinc-500 mb-5">{CURRENT_MONTH_LABEL} · {formatCurrency(934000)} total</p>
           <BreakdownBars items={OUTFLOWS} green={green} />
           <div className="mt-5 pt-4 border-t border-gray-100 dark:border-zinc-800 flex items-center justify-between">
             <span className="text-xs text-gray-400 dark:text-zinc-500">Total outflow</span>

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
-import { AlertTriangle, Fuel, Droplets, DollarSign, TrendingUp } from 'lucide-react'
-import { formatCurrency, formatDate } from '@/lib/formatters'
+import { AlertTriangle, Fuel } from 'lucide-react'
+import { formatCurrency, formatDate, CURRENT_MONTH_LABEL } from '@/lib/formatters'
 import { MOCK_FUEL_TRANSACTIONS } from '@/lib/mockData'
 import { cn } from '@/lib/utils'
 
@@ -26,27 +26,30 @@ export default function FuelCardsPage() {
   return (
     <div className="p-4 md:p-6 w-full space-y-5">
 
+      {/* Page header */}
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-zinc-50 tracking-tight">Fuel Cards</h1>
+          <p className="text-sm text-gray-400 dark:text-zinc-500 mt-1">Fleet fuel spend & anomaly detection</p>
+        </div>
+      </div>
+
       {/* KPI strip */}
       <motion.div
-        className="grid grid-cols-2 md:grid-cols-4 gap-4"
+        className="flex flex-wrap items-start gap-x-12 gap-y-6 border-b border-gray-100 dark:border-zinc-800 pb-8"
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
       >
         {[
-          { label: 'Fuel Spend (MTD)',       value: formatCurrency(total),        sub: `${MOCK_FUEL_TRANSACTIONS.length} transactions`,   icon: DollarSign,  alert: false },
-          { label: 'Total Gallons',          value: `${totalGal.toFixed(0)} gal`, sub: 'Diesel · March 2024',                            icon: Droplets,    alert: false },
-          { label: 'Avg Price / Gallon',     value: `$${avgPpg.toFixed(3)}`,      sub: 'Fleet average',                                  icon: TrendingUp,  alert: false },
-          { label: 'Flagged Transactions',   value: String(flagged.length),        sub: flagged.length > 0 ? 'Needs review' : 'All clear', icon: AlertTriangle, alert: flagged.length > 0 },
-        ].map(({ label, value, sub, icon: Icon, alert }) => (
-          <div key={label} className="rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-wide">{label}</p>
-              <div className="h-8 w-8 rounded-lg bg-gray-50 dark:bg-zinc-800 border border-gray-100 dark:border-zinc-700 flex items-center justify-center text-gray-400 dark:text-zinc-500">
-                <Icon className="h-4 w-4" />
-              </div>
-            </div>
-            <p className={cn('text-2xl sm:text-3xl font-bold tabular-nums tracking-tight', alert ? 'text-amber-600' : 'text-gray-900 dark:text-zinc-50')}>{value}</p>
-            <p className={cn('text-xs mt-1.5', alert ? 'text-amber-500' : 'text-gray-400 dark:text-zinc-500')}>{sub}</p>
+          { label: 'Fuel Spend (MTD)',     value: formatCurrency(total),        sub: `${MOCK_FUEL_TRANSACTIONS.length} transactions`,    alert: false },
+          { label: 'Total Gallons',        value: `${totalGal.toFixed(0)} gal`, sub: `Diesel · ${CURRENT_MONTH_LABEL}`,                 alert: false },
+          { label: 'Avg Price / Gallon',   value: `$${avgPpg.toFixed(3)}`,      sub: 'Fleet average',                                   alert: false },
+          { label: 'Flagged Transactions', value: String(flagged.length),        sub: flagged.length > 0 ? 'Needs review' : 'All clear', alert: flagged.length > 0 },
+        ].map(({ label, value, sub, alert }) => (
+          <div key={label}>
+            <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-widest">{label}</p>
+            <p className={cn('text-3xl font-bold tabular-nums tracking-tight mt-1', alert ? 'text-amber-600' : 'text-gray-900 dark:text-zinc-50')}>{value}</p>
+            {sub && <p className={cn('text-xs mt-0.5', alert ? 'text-amber-500' : 'text-gray-400 dark:text-zinc-500')}>{sub}</p>}
           </div>
         ))}
       </motion.div>
@@ -93,7 +96,7 @@ export default function FuelCardsPage() {
             <Fuel className="h-4 w-4 text-gray-400 dark:text-zinc-500" />
             <p className="text-sm font-semibold text-gray-800 dark:text-zinc-100">Fuel Transactions</p>
           </div>
-          <span className="text-xs text-gray-400 dark:text-zinc-500">{MOCK_FUEL_TRANSACTIONS.length} records · March 2024</span>
+          <span className="text-xs text-gray-400 dark:text-zinc-500">{MOCK_FUEL_TRANSACTIONS.length} records · {CURRENT_MONTH_LABEL}</span>
         </div>
         <div className="overflow-x-auto"><table className="w-full">
           <thead>

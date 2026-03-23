@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Search, MapPin, Weight, Truck, RefreshCw, TrendingUp, Route, Clock } from 'lucide-react'
+import { Search, MapPin, Weight, Truck, RefreshCw } from 'lucide-react'
 import { formatCurrency, formatDate } from '@/lib/formatters'
 import { cn } from '@/lib/utils'
 
@@ -33,10 +33,10 @@ const bestRpm = Math.max(...BOARD_LOADS.map(l => l.rpm))
 const avgMiles = Math.round(BOARD_LOADS.reduce((s, l) => s + l.miles, 0) / BOARD_LOADS.length)
 
 const KPI_STRIP = [
-  { label: 'Available Loads', value: String(BOARD_LOADS.length), icon: Route },
-  { label: 'Best Rate / Mile', value: `$${bestRpm.toFixed(2)}/mi`, icon: TrendingUp },
-  { label: 'Avg Distance', value: `${avgMiles} mi`, icon: Truck },
-  { label: 'Next Pickup', value: 'Today', icon: Clock },
+  { label: 'Available Loads', value: String(BOARD_LOADS.length), sub: '' },
+  { label: 'Best Rate / Mile', value: `$${bestRpm.toFixed(2)}/mi`, sub: '' },
+  { label: 'Avg Distance', value: `${avgMiles} mi`, sub: '' },
+  { label: 'Next Pickup', value: 'Today', sub: '' },
 ]
 
 export default function LoadBoardPage() {
@@ -53,29 +53,32 @@ export default function LoadBoardPage() {
   return (
     <div className="p-4 md:p-6 w-full space-y-5">
 
+      {/* Page header */}
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 dark:text-zinc-50 tracking-tight">Load Board</h1>
+          <p className="text-sm text-gray-400 dark:text-zinc-500 mt-1">Available freight in the market</p>
+        </div>
+      </div>
+
       {/* KPI Strip */}
       <motion.div
-        className="grid grid-cols-2 md:grid-cols-4 gap-4"
-        initial={{ opacity: 0, y: 10 }}
+        className="flex flex-wrap items-start gap-x-6 sm:gap-x-12 gap-y-4 sm:gap-y-6 border-b border-gray-100 dark:border-zinc-800 pb-8"
+        initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
       >
-        {KPI_STRIP.map(({ label, value, icon: Icon }) => (
-          <div key={label} className="rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-wide">{label}</p>
-              <div className="h-8 w-8 rounded-lg bg-gray-50 dark:bg-zinc-800 border border-gray-100 dark:border-zinc-700 flex items-center justify-center text-gray-400 dark:text-zinc-500">
-                <Icon className="h-4 w-4" />
-              </div>
-            </div>
-            <p className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-zinc-50 tabular-nums tracking-tight">{value}</p>
+        {KPI_STRIP.map(({ label, value, sub }) => (
+          <div key={label}>
+            <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-widest">{label}</p>
+            <p className="text-xl sm:text-3xl font-bold tabular-nums tracking-tight mt-1 text-gray-900 dark:text-zinc-50">{value}</p>
+            {sub && <p className="text-xs mt-0.5 text-gray-400 dark:text-zinc-500">{sub}</p>}
           </div>
         ))}
       </motion.div>
 
       {/* Controls */}
       <motion.div
-        className="flex flex-wrap items-center gap-3"
+        className="flex flex-wrap gap-2 sm:gap-3"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.25, delay: 0.1 }}
@@ -86,7 +89,7 @@ export default function LoadBoardPage() {
             placeholder="Search origin or destination..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="h-9 pl-8 pr-3 text-sm rounded-lg border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-50 placeholder:text-gray-400 dark:placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-zinc-100 focus:border-transparent w-72"
+            className="h-9 pl-8 pr-3 text-sm rounded-lg border border-gray-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-zinc-50 placeholder:text-gray-400 dark:placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-zinc-100 focus:border-transparent w-full sm:w-72"
           />
         </div>
 

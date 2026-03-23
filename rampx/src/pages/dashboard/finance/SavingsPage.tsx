@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion'
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
-import { ShieldCheck, TrendingUp, FileSearch, AlertTriangle } from 'lucide-react'
-import { formatCurrency } from '@/lib/formatters'
+import { formatCurrency, CURRENT_MONTH_LABEL } from '@/lib/formatters'
 import { MOCK_SAVINGS, MOCK_INVOICES } from '@/lib/mockData'
 import { cn } from '@/lib/utils'
 import { useUIStore } from '@/stores/uiStore'
@@ -39,25 +38,30 @@ export default function SavingsPage() {
   return (
     <div className="p-4 md:p-6 w-full space-y-5">
 
+      {/* Page header */}
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-zinc-50 tracking-tight">Savings</h1>
+          <p className="text-sm text-gray-400 dark:text-zinc-500 mt-1">Audit recovery & overcharge detection</p>
+        </div>
+      </div>
+
       {/* KPI strip */}
       <motion.div
-        className="grid grid-cols-2 md:grid-cols-4 gap-4"
+        className="flex flex-wrap items-start gap-x-12 gap-y-6 border-b border-gray-100 dark:border-zinc-800 pb-8"
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
       >
         {[
-          { label: 'Total Savings (YTD)',   value: formatCurrency(totalSavings), sub: 'Audit engine recoveries',       icon: ShieldCheck  },
-          { label: 'Invoices Audited',      value: String(totalAudited),         sub: 'March 2024 YTD',               icon: FileSearch   },
-          { label: 'Recovery Rate',         value: `${recoveryRate}%`,           sub: 'Invoices with discrepancies',  icon: TrendingUp   },
-          { label: 'Issue Types Found',     value: String(SAVINGS_BY_TYPE.length), sub: 'Distinct discrepancy types', icon: AlertTriangle },
-        ].map(({ label, value, sub, icon: Icon }) => (
-          <div key={label} className="rounded-xl border border-gray-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-wide">{label}</p>
-              <div className="h-8 w-8 rounded-lg bg-gray-50 dark:bg-zinc-800 border border-gray-100 dark:border-zinc-700 flex items-center justify-center text-gray-400 dark:text-zinc-500"><Icon className="h-4 w-4" /></div>
-            </div>
-            <p className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-zinc-50 tabular-nums tracking-tight">{value}</p>
-            <p className="text-[11px] text-gray-400 dark:text-zinc-500 mt-1">{sub}</p>
+          { label: 'Total Savings (YTD)', value: formatCurrency(totalSavings), sub: 'Audit engine recoveries',      alert: false },
+          { label: 'Invoices Audited',    value: String(totalAudited),         sub: `${CURRENT_MONTH_LABEL} YTD`,  alert: false },
+          { label: 'Recovery Rate',       value: `${recoveryRate}%`,           sub: 'Invoices with discrepancies', alert: false },
+          { label: 'Issue Types Found',   value: String(SAVINGS_BY_TYPE.length), sub: 'Distinct discrepancy types', alert: false },
+        ].map(({ label, value, sub, alert }) => (
+          <div key={label}>
+            <p className="text-xs font-medium text-gray-400 dark:text-zinc-500 uppercase tracking-widest">{label}</p>
+            <p className={cn('text-3xl font-bold tabular-nums tracking-tight mt-1', alert ? 'text-amber-600' : 'text-gray-900 dark:text-zinc-50')}>{value}</p>
+            {sub && <p className={cn('text-xs mt-0.5', alert ? 'text-amber-500' : 'text-gray-400 dark:text-zinc-500')}>{sub}</p>}
           </div>
         ))}
       </motion.div>
