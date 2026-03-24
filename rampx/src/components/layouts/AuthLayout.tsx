@@ -8,7 +8,7 @@ export function AuthLayout() {
       {/* Left — mantra panel */}
       <div className="hidden lg:flex w-[440px] shrink-0 bg-black flex-col p-12">
         <Link to="/" className="flex items-center gap-3">
-          <img src="/fleettiilogodark.png" alt="Fleetii" className="h-12 object-contain" />
+          <img src="/fleettiilogodark-removebg-preview.png" alt="Fleetii" className="h-12 object-contain" />
           <span className="text-2xl font-bold text-white tracking-tight">Fleetii</span>
         </Link>
 
@@ -23,7 +23,7 @@ export function AuthLayout() {
       <div className="flex-1 flex items-center justify-center px-6 py-16">
         <div className="w-full max-w-[360px]">
           <Link to="/" className="flex items-center justify-center gap-3 mb-10 lg:hidden">
-            <img src="/fleetiilogolight.png" alt="Fleetii" className="h-12 object-contain" />
+            <img src="/fleetiilogolight-removebg-preview.png" alt="Fleetii" className="h-12 object-contain" />
             <span className="text-2xl font-bold text-gray-900 tracking-tight">Fleetii</span>
           </Link>
 

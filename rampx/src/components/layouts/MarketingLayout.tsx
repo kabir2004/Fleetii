@@ -10,7 +10,7 @@ export function MarketingLayout() {
       <header className="sticky top-0 z-50 w-full bg-white">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2.5">
-            <img src="/fleetiilogolight.png" alt="Fleetii" className="h-12 object-contain" />
+            <img src="/fleetiilogolight-removebg-preview.png" alt="Fleetii" className="h-12 object-contain" />
             <span className="text-xl font-bold text-gray-900 tracking-tight">Fleetii</span>
           </Link>
           <nav className="hidden md:flex items-center gap-8">
@@ -71,7 +71,7 @@ export function MarketingLayout() {
           <div className="flex flex-col md:flex-row justify-between gap-12">
             <div className="max-w-xs">
               <div className="flex items-center gap-2.5 mb-3">
-                <img src="/fleetiilogolight.png" alt="Fleetii" className="h-12 object-contain" />
+                <img src="/fleetiilogolight-removebg-preview.png" alt="Fleetii" className="h-12 object-contain" />
                 <span className="text-lg font-bold text-gray-900 tracking-tight">Fleetii</span>
               </div>
               <p className="text-sm text-gray-500 leading-relaxed">The financial operating system for trucking companies. Audit every invoice, pay every carrier, track every dollar.</p>

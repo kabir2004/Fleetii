@@ -61,6 +61,13 @@ import LaneAnalyticsPage from '@/pages/dashboard/analytics/LaneAnalyticsPage'
 import CarrierScorecard from '@/pages/dashboard/analytics/CarrierScorecard'
 import ReportsPage from '@/pages/dashboard/analytics/ReportsPage'
 
+// Insights
+import DriverPerformancePage from '@/pages/dashboard/insights/DriverPerformancePage'
+import ProfitabilityPage from '@/pages/dashboard/insights/ProfitabilityPage'
+import FuelIntelligencePage from '@/pages/dashboard/insights/FuelIntelligencePage'
+import RevenueForecastPage from '@/pages/dashboard/insights/RevenueForecastPage'
+import HealthScorePage from '@/pages/dashboard/insights/HealthScorePage'
+
 // Compliance
 import ComplianceDashboard from '@/pages/dashboard/compliance/ComplianceDashboard'
 import DocumentsPage from '@/pages/dashboard/compliance/DocumentsPage'
@@ -153,6 +160,13 @@ export default function App() {
             <Route path="/dashboard/analytics/lanes" element={<LaneAnalyticsPage />} />
             <Route path="/dashboard/analytics/carriers" element={<CarrierScorecard />} />
             <Route path="/dashboard/analytics/reports" element={<ReportsPage />} />
+
+            <Route path="/dashboard/insights" element={<Navigate to="/dashboard/insights/drivers" replace />} />
+            <Route path="/dashboard/insights/drivers" element={<DriverPerformancePage />} />
+            <Route path="/dashboard/insights/profitability" element={<ProfitabilityPage />} />
+            <Route path="/dashboard/insights/fuel" element={<FuelIntelligencePage />} />
+            <Route path="/dashboard/insights/forecast" element={<RevenueForecastPage />} />
+            <Route path="/dashboard/insights/health" element={<HealthScorePage />} />
 
             <Route path="/dashboard/compliance" element={<ComplianceDashboard />} />
             <Route path="/dashboard/compliance/documents" element={<DocumentsPage />} />
